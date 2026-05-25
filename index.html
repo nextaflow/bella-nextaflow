@@ -3,1647 +3,685 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Bella IA — O único agente de IA integrado nativamente à Trinks. Atenda clientes no WhatsApp 24h e feche agendamentos automáticos. Ative em 48 horas.">
-<meta property="og:title" content="Bella IA — Agente de Atendimento para Trinks">
-<meta property="og:description" content="Seu salão atendendo 24h no WhatsApp, sem você. Integrado à Trinks. Ativo em 48h.">
+<meta name="description" content="Bella IA — O único agente de IA integrado nativamente à Trinks. Atenda clientes no WhatsApp 24h, feche agendamentos, solicite avaliações no Google e fidelize automaticamente. Ativa em 48h.">
+<meta property="og:title" content="Bella IA — Agente de IA para Trinks | NextaFlow">
+<meta property="og:description" content="Seu salão atendendo 24h no WhatsApp, sem você. Integrado à Trinks. Ativo em 48h — não em 30 dias.">
 <meta property="og:type" content="website">
 <title>Bella IA — Agente de IA para Trinks | NextaFlow</title>
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
 <style>
-/* ============================================================
-   RESET & VARIABLES
-   ============================================================ */
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; font-size: 16px; }
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;font-size:16px}
+:root{
+  --navy:#1B2A4A;
+  --navy-md:#243459;
+  --navy-lt:#2E4070;
+  --slate:#4A6FA5;
+  --green:#4CAF78;
+  --green-lt:#6FD49A;
+  --green-pale:rgba(76,175,120,0.08);
+  --orange:#E07A4A;
+  --orange-lt:#F0A07A;
+  --offwhite:#F7F8FC;
+  --muted:#8A9BBE;
+  --white:#ffffff;
+  --font-display:'Sora',sans-serif;
+  --font-body:'DM Sans',sans-serif;
+  --max-w:1160px;
+  --radius:16px;
+  --radius-sm:10px;
+  --radius-pill:100px;
+}
+body{font-family:var(--font-body);background:var(--navy);color:var(--white);overflow-x:hidden;line-height:1.6}
+.container{max-width:var(--max-w);margin:0 auto;padding:0 2rem}
+.section-pad{padding:6rem 2rem}
+.section-label{display:inline-block;font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--green);margin-bottom:1rem}
+.section-title{font-family:var(--font-display);font-size:clamp(1.8rem,3.5vw,2.75rem);font-weight:700;line-height:1.15;letter-spacing:-0.02em;margin-bottom:1rem}
+.section-sub{font-size:1.05rem;color:var(--muted);max-width:560px;line-height:1.75}
+.text-green{color:var(--green)}
+.text-orange{color:var(--orange)}
+.btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.85rem 1.75rem;border-radius:var(--radius-pill);font-family:var(--font-body);font-size:0.95rem;font-weight:700;text-decoration:none;border:none;cursor:pointer;transition:all 0.25s ease;white-space:nowrap}
+.btn-green{background:var(--green);color:var(--navy)}
+.btn-green:hover{background:var(--green-lt);transform:translateY(-2px);box-shadow:0 8px 28px rgba(76,175,120,0.35)}
+.btn-outline{background:transparent;color:var(--white);border:1.5px solid rgba(255,255,255,0.25)}
+.btn-outline:hover{border-color:var(--green);color:var(--green)}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.65s ease,transform 0.65s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.d1{transition-delay:0.1s}.d2{transition-delay:0.2s}.d3{transition-delay:0.3s}.d4{transition-delay:0.4s}
 
-:root {
-  /* Brand Colors */
-  --navy:        #1B2A4A;
-  --navy-md:     #243459;
-  --navy-lt:     #2E4070;
-  --slate:       #4A6FA5;
-  --green:       #4CAF78;
-  --green-lt:    #6FD49A;
-  --green-pale:  #eaf7f0;
-  --orange:      #E07A4A;
-  --orange-lt:   #F0A07A;
-  --indigo:      #7F77DD;
-  --offwhite:    #F7F8FC;
-  --muted:       #8A9BBE;
-  --white:       #ffffff;
+/* ── NAV ── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:1.1rem 2rem;display:flex;align-items:center;justify-content:space-between;transition:background 0.3s,backdrop-filter 0.3s}
+.nav.scrolled{background:rgba(27,42,74,0.96);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.07)}
+.nav-logo{font-family:var(--font-display);font-size:1.2rem;font-weight:700;text-decoration:none;color:var(--white);display:flex;align-items:center;gap:0.4rem}
+.nav-logo .dot{color:var(--green)}
+.nav-logo .by{font-size:0.68rem;font-weight:400;color:var(--muted);font-family:var(--font-body)}
+.nav-links{display:flex;align-items:center;gap:2rem;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:0.88rem;transition:color 0.2s}
+.nav-links a:hover{color:var(--white)}
+.nav-cta{padding:0.55rem 1.25rem;font-size:0.85rem}
 
-  /* Fonts */
-  --font-display: 'Sora', sans-serif;
-  --font-body:    'DM Sans', sans-serif;
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding:8rem 2rem 5rem}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(76,175,120,0.055) 1px,transparent 1px),linear-gradient(90deg,rgba(76,175,120,0.055) 1px,transparent 1px);background-size:60px 60px;animation:gridShift 22s linear infinite}
+@keyframes gridShift{0%{background-position:0 0}100%{background-position:60px 60px}}
+.hero-glow{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(76,175,120,0.11) 0%,transparent 70%);top:-150px;right:-150px;animation:glowP 7s ease-in-out infinite}
+.hero-glow2{position:absolute;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle,rgba(224,122,74,0.07) 0%,transparent 70%);bottom:-80px;left:8%;animation:glowP 9s ease-in-out infinite reverse}
+@keyframes glowP{0%,100%{transform:scale(1)}50%{transform:scale(1.12);opacity:.7}}
+.hero-inner{max-width:var(--max-w);margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;position:relative;z-index:1;width:100%}
+.hero-badge{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(76,175,120,0.1);border:1px solid rgba(76,175,120,0.28);color:var(--green-lt);font-size:0.78rem;font-weight:600;padding:0.4rem 1rem;border-radius:var(--radius-pill);margin-bottom:1.5rem}
+.pulse-dot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulseAnim 2s infinite}
+@keyframes pulseAnim{0%,100%{box-shadow:0 0 0 0 rgba(76,175,120,0.6)}50%{box-shadow:0 0 0 6px rgba(76,175,120,0)}}
+.hero h1{font-family:var(--font-display);font-size:clamp(2.2rem,4.5vw,3.6rem);font-weight:800;line-height:1.1;letter-spacing:-0.03em;margin-bottom:1.5rem}
+.hero h1 .hl{color:var(--green)}
+.hero-sub{font-size:1.05rem;color:var(--muted);line-height:1.75;margin-bottom:2rem;max-width:480px}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2.5rem}
+.hero-proof{display:flex;gap:1.5rem;flex-wrap:wrap}
+.proof-item{display:flex;align-items:center;gap:0.4rem;font-size:0.8rem;color:var(--muted)}
+.proof-item i{color:var(--green);font-size:0.85rem}
 
-  /* Spacing */
-  --section-pad: 6rem 2rem;
-  --max-w: 1160px;
-  --radius: 16px;
-  --radius-sm: 10px;
-  --radius-pill: 100px;
-}
+/* 48h badge hero */
+.badge-48{display:inline-flex;align-items:center;gap:0.6rem;background:rgba(224,122,74,0.12);border:1px solid rgba(224,122,74,0.3);border-radius:var(--radius-sm);padding:0.6rem 1rem;margin-bottom:1.5rem}
+.badge-48 .num{font-family:var(--font-display);font-size:1.6rem;font-weight:800;color:var(--orange);line-height:1}
+.badge-48 .txt{font-size:0.78rem;color:var(--orange-lt);line-height:1.3}
+.badge-48 .txt strong{display:block;color:var(--white);font-size:0.85rem}
 
-body {
-  font-family: var(--font-body);
-  background: var(--navy);
-  color: var(--white);
-  overflow-x: hidden;
-  line-height: 1.6;
-}
+/* Phone mockup */
+.phone-wrap{display:flex;justify-content:center;align-items:center;position:relative}
+.ring{position:absolute;border-radius:50%;border:1px solid rgba(76,175,120,0.12);animation:ringP 3s ease-in-out infinite}
+.ring:nth-child(1){width:320px;height:320px}
+.ring:nth-child(2){width:390px;height:390px;animation-delay:1s;border-color:rgba(76,175,120,0.06)}
+@keyframes ringP{0%,100%{transform:scale(1)}50%{transform:scale(1.05);opacity:.5}}
+.phone{position:relative;z-index:1;width:295px;background:#111;border-radius:36px;padding:11px;box-shadow:0 0 0 1px rgba(255,255,255,0.07),0 30px 80px rgba(0,0,0,0.5),0 0 60px rgba(76,175,120,0.08)}
+.phone-screen{background:#fff;border-radius:27px;overflow:hidden}
+.wh-header{background:#075E54;padding:11px 13px;display:flex;align-items:center;gap:9px}
+.wh-av{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,#4CAF78,#2E8B57);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:0.85rem;color:white;flex-shrink:0}
+.wh-name{color:white;font-size:0.82rem;font-weight:600;font-family:var(--font-body)}
+.wh-st{color:#B2DFDB;font-size:0.65rem;font-family:var(--font-body)}
+.chat-area{background:#ECE5DD;padding:11px;min-height:300px;display:flex;flex-direction:column;gap:7px;overflow:hidden}
+.cm{max-width:83%;padding:7px 11px;border-radius:11px;font-size:0.74rem;line-height:1.4;font-family:var(--font-body);color:#111;opacity:0;transform:translateY(8px);transition:opacity 0.35s ease,transform 0.35s ease}
+.cm.show{opacity:1;transform:translateY(0)}
+.cm.r{background:#fff;align-self:flex-start;border-radius:0 11px 11px 11px}
+.cm.s{background:#DCF8C6;align-self:flex-end;border-radius:11px 0 11px 11px;text-align:right}
+.cm .t{font-size:0.58rem;color:#999;margin-top:2px;display:block}
+.typing{display:flex;gap:3px;align-items:center;padding:9px 12px;background:#fff;border-radius:0 11px 11px 11px;width:fit-content;align-self:flex-start;opacity:0;transition:opacity 0.25s}
+.typing.show{opacity:1}
+.typing span{width:6px;height:6px;border-radius:50%;background:#aaa;animation:typB 1.2s infinite}
+.typing span:nth-child(2){animation-delay:.2s}
+.typing span:nth-child(3){animation-delay:.4s}
+@keyframes typB{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-5px)}}
 
-/* ============================================================
-   UTILITIES
-   ============================================================ */
-.container { max-width: var(--max-w); margin: 0 auto; padding: 0 2rem; }
-.section-label {
-  display: inline-block;
-  font-family: var(--font-body);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--green);
-  margin-bottom: 1rem;
-}
-.section-title {
-  font-family: var(--font-display);
-  font-size: clamp(1.8rem, 3.5vw, 2.75rem);
-  font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-  margin-bottom: 1rem;
-}
-.section-sub {
-  font-size: 1.05rem;
-  color: var(--muted);
-  max-width: 540px;
-  line-height: 1.75;
-}
-.text-green { color: var(--green); }
-.text-orange { color: var(--orange); }
+/* ── TRUST BAR ── */
+.trust-bar{background:rgba(255,255,255,0.025);border-top:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);padding:1.4rem 2rem}
+.trust-inner{max-width:var(--max-w);margin:0 auto;display:flex;align-items:center;justify-content:center;gap:2.5rem;flex-wrap:wrap}
+.trust-item{display:flex;align-items:center;gap:0.55rem;font-size:0.83rem;color:var(--muted)}
+.trust-item i{color:var(--green)}
+.trust-item strong{color:var(--white)}
+.tsep{width:1px;height:22px;background:rgba(255,255,255,0.09)}
 
-/* Buttons */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.85rem 1.75rem;
-  border-radius: var(--radius-pill);
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  font-weight: 700;
-  text-decoration: none;
-  border: none;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  white-space: nowrap;
-}
-.btn-green {
-  background: var(--green);
-  color: var(--navy);
-}
-.btn-green:hover {
-  background: var(--green-lt);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(76,175,120,0.35);
-}
-.btn-outline {
-  background: transparent;
-  color: var(--white);
-  border: 1.5px solid rgba(255,255,255,0.25);
-}
-.btn-outline:hover {
-  border-color: var(--green);
-  color: var(--green);
-}
-.btn-orange {
-  background: var(--orange);
-  color: var(--white);
-}
-.btn-orange:hover {
-  background: var(--orange-lt);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 28px rgba(224,122,74,0.35);
-}
+/* ── DIFERENCIAL 48H ── */
+.diff-section{padding:5rem 2rem;background:var(--navy-md)}
+.diff-inner{max-width:var(--max-w);margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.diff-card{background:rgba(224,122,74,0.07);border:1px solid rgba(224,122,74,0.22);border-radius:var(--radius);padding:2rem}
+.diff-card h3{font-family:var(--font-display);font-size:1.05rem;font-weight:700;margin-bottom:1.25rem;color:var(--orange)}
+.diff-row{display:flex;align-items:center;gap:1.25rem;padding:0.75rem 0;border-bottom:1px solid rgba(255,255,255,0.06)}
+.diff-row:last-child{border-bottom:none}
+.diff-label{font-size:0.85rem;color:var(--muted);flex:1}
+.diff-bella{font-weight:700;color:var(--green);font-size:0.9rem;text-align:right;min-width:90px}
+.diff-lucy{font-size:0.82rem;color:rgba(255,255,255,0.3);text-align:right;min-width:90px;text-decoration:line-through}
 
-/* Reveal animations */
-.reveal {
-  opacity: 0;
-  transform: translateY(32px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-.reveal-delay-4 { transition-delay: 0.4s; }
+/* ── DOR ── */
+.dor-section{padding:6rem 2rem;background:var(--navy)}
+.dor-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:3rem}
+.dor-card{padding:2rem;border-radius:var(--radius);border:1px solid rgba(255,255,255,0.07)}
+.dor-card.prob{background:rgba(255,255,255,0.025)}
+.dor-card.sol{background:rgba(76,175,120,0.06);border-color:rgba(76,175,120,0.18)}
+.dor-title{font-family:var(--font-display);font-size:1.05rem;font-weight:700;margin-bottom:1.25rem;display:flex;align-items:center;gap:0.5rem}
+.dor-card.prob .dor-title{color:#F87171}
+.dor-card.sol .dor-title{color:var(--green)}
+.dor-list{list-style:none;display:flex;flex-direction:column;gap:0.8rem}
+.dor-list li{display:flex;align-items:flex-start;gap:0.7rem;font-size:0.88rem;color:var(--muted);line-height:1.5}
+.dor-list li .ico{flex-shrink:0;margin-top:1px;font-size:0.95rem}
 
-/* ============================================================
-   NAV
-   ============================================================ */
-.nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 1000;
-  padding: 1.1rem 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  transition: background 0.3s, backdrop-filter 0.3s;
-}
-.nav.scrolled {
-  background: rgba(27, 42, 74, 0.95);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-}
-.nav-logo {
-  font-family: var(--font-display);
-  font-size: 1.2rem;
-  font-weight: 700;
-  text-decoration: none;
-  color: var(--white);
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.nav-logo .dot { color: var(--green); }
-.nav-logo .by {
-  font-size: 0.7rem;
-  font-weight: 400;
-  color: var(--muted);
-  font-family: var(--font-body);
-  margin-left: 0.25rem;
-}
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  list-style: none;
-}
-.nav-links a {
-  color: var(--muted);
-  text-decoration: none;
-  font-size: 0.9rem;
-  transition: color 0.2s;
-}
-.nav-links a:hover { color: var(--white); }
-.nav-cta { padding: 0.55rem 1.25rem; font-size: 0.85rem; }
-.nav-hamburger {
-  display: none;
-  background: none;
-  border: none;
-  color: var(--white);
-  font-size: 1.5rem;
-  cursor: pointer;
-}
+/* ── CASOS DE USO ── */
+.cases-section{padding:6rem 2rem;background:var(--navy-md)}
+.cases-tabs{display:flex;gap:0.65rem;margin-top:2.5rem;flex-wrap:wrap}
+.ctab{padding:0.55rem 1.2rem;border-radius:var(--radius-pill);border:1px solid rgba(255,255,255,0.11);background:transparent;color:var(--muted);font-family:var(--font-body);font-size:0.83rem;font-weight:500;cursor:pointer;transition:all 0.22s}
+.ctab.active,.ctab:hover{background:var(--green);border-color:var(--green);color:var(--navy);font-weight:700}
+.cases-content{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:2.5rem;align-items:start}
+.cinfo{display:none}
+.cinfo.active{display:block}
+.persona-row{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem}
+.pav{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:1.1rem;flex-shrink:0}
+.pav.c1{background:rgba(76,175,120,0.18);color:var(--green)}
+.pav.c2{background:rgba(224,122,74,0.18);color:var(--orange)}
+.pav.c3{background:rgba(127,119,221,0.18);color:#A89EEE}
+.pname{font-family:var(--font-display);font-weight:700;font-size:0.95rem}
+.pctx{font-size:0.79rem;color:var(--muted)}
+.cdesc{font-size:0.92rem;color:var(--muted);line-height:1.75;margin-bottom:1.5rem}
+.cresult{display:flex;align-items:flex-start;gap:0.6rem;background:rgba(76,175,120,0.08);border:1px solid rgba(76,175,120,0.18);border-radius:var(--radius-sm);padding:0.85rem 1.1rem;font-size:0.85rem;color:var(--green-lt)}
+.cresult i{font-size:1rem;flex-shrink:0;margin-top:2px}
+.cchat{background:#ECE5DD;border-radius:var(--radius);overflow:hidden;display:none}
+.cchat.active{display:block}
+.cchat-hdr{background:#075E54;padding:9px 13px;display:flex;align-items:center;gap:8px}
+.cchat-hdr .cn{color:white;font-size:0.8rem;font-weight:600;font-family:var(--font-body)}
+.cchat-hdr .cs{color:#B2DFDB;font-size:0.63rem;font-family:var(--font-body)}
+.cmsgs{padding:11px;display:flex;flex-direction:column;gap:7px;min-height:250px}
+.cmsg{max-width:82%;padding:7px 11px;border-radius:10px;font-size:0.73rem;line-height:1.4;font-family:var(--font-body);color:#111}
+.cmsg.r{background:#fff;align-self:flex-start;border-radius:0 10px 10px 10px}
+.cmsg.s{background:#DCF8C6;align-self:flex-end;border-radius:10px 0 10px 10px;text-align:right}
+.cmsg .t{font-size:0.57rem;color:#999;margin-top:2px;display:block}
 
-/* ============================================================
-   HERO
-   ============================================================ */
-.hero {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  padding: 8rem 2rem 5rem;
-}
+/* ── FIDELIZAÇÃO ── */
+.fidel-section{padding:6rem 2rem;background:var(--navy-lt)}
+.fidel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:3rem}
+.fidel-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:var(--radius);padding:1.75rem;transition:all 0.28s ease}
+.fidel-card:hover{background:rgba(76,175,120,0.07);border-color:rgba(76,175,120,0.2);transform:translateY(-4px)}
+.fidel-icon{width:46px;height:46px;border-radius:12px;background:rgba(76,175,120,0.1);display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:var(--green);margin-bottom:1.1rem;transition:all 0.28s}
+.fidel-card:hover .fidel-icon{background:var(--green);color:var(--navy)}
+.fidel-card h4{font-family:var(--font-display);font-weight:700;font-size:0.93rem;margin-bottom:0.45rem}
+.fidel-card p{font-size:0.83rem;color:var(--muted);line-height:1.6}
+.fidel-card .fex{margin-top:0.85rem;padding-top:0.85rem;border-top:1px solid rgba(255,255,255,0.06);font-size:0.76rem;color:var(--green-lt);font-style:italic;line-height:1.5}
 
-/* Animated grid background */
-.hero-grid {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(76,175,120,0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(76,175,120,0.06) 1px, transparent 1px);
-  background-size: 60px 60px;
-  animation: gridShift 20s linear infinite;
-}
-@keyframes gridShift {
-  0% { background-position: 0 0; }
-  100% { background-position: 60px 60px; }
-}
-.hero-glow {
-  position: absolute;
-  width: 700px;
-  height: 700px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(76,175,120,0.12) 0%, transparent 70%);
-  top: -150px; right: -150px;
-  animation: glowPulse 6s ease-in-out infinite;
-}
-.hero-glow2 {
-  position: absolute;
-  width: 400px;
-  height: 400px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(224,122,74,0.08) 0%, transparent 70%);
-  bottom: -100px; left: 10%;
-  animation: glowPulse 8s ease-in-out infinite reverse;
-}
-@keyframes glowPulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.15); opacity: 0.7; }
-}
+/* ── ROI ── */
+.roi-section{padding:6rem 2rem;background:var(--navy);position:relative;overflow:hidden}
+.roi-section::before{content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);width:500px;height:1px;background:linear-gradient(90deg,transparent,var(--green),transparent)}
+.roi-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;margin-top:3rem;align-items:start}
+.roi-calc{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.09);border-radius:var(--radius);padding:2rem}
+.roi-calc h3{font-family:var(--font-display);font-size:0.95rem;font-weight:700;margin-bottom:1.5rem;color:var(--green)}
+.roi-field{margin-bottom:1.2rem}
+.roi-field label{display:block;font-size:0.8rem;color:var(--muted);margin-bottom:0.4rem;font-weight:500}
+.roi-field input[type=range]{width:100%;accent-color:var(--green);cursor:pointer}
+.val-row{display:flex;justify-content:space-between;align-items:center;margin-top:0.2rem}
+.val-num{font-family:var(--font-display);font-size:1rem;font-weight:700;color:var(--white)}
+.roi-res{background:var(--navy-md);border:1px solid rgba(255,255,255,0.07);border-radius:var(--radius);padding:2rem;display:flex;flex-direction:column;gap:1.2rem}
+.roi-lbl{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);font-weight:700;margin-bottom:0.5rem}
+.rmet{border-bottom:1px solid rgba(255,255,255,0.06);padding-bottom:1.2rem}
+.rmet:last-of-type{border-bottom:none;padding-bottom:0}
+.rmet .ml{font-size:0.8rem;color:var(--muted);margin-bottom:0.2rem}
+.rmet .mv{font-family:var(--font-display);font-size:1.9rem;font-weight:800;color:var(--green);line-height:1}
+.rmet .mv.ora{color:var(--orange)}
+.rmet .ms{font-size:0.75rem;color:var(--muted);margin-top:0.2rem}
+.payback-box{background:rgba(76,175,120,0.09);border:1px solid rgba(76,175,120,0.22);border-radius:var(--radius-sm);padding:1rem 1.25rem;text-align:center}
+.payback-box .pbl{font-size:0.76rem;color:var(--green-lt);margin-bottom:0.25rem}
+.payback-box .pbv{font-family:var(--font-display);font-size:1.35rem;font-weight:800;color:var(--white)}
 
-.hero-inner {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
-  position: relative;
-  z-index: 1;
-  width: 100%;
-}
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  background: rgba(76,175,120,0.12);
-  border: 1px solid rgba(76,175,120,0.3);
-  color: var(--green-lt);
-  font-size: 0.78rem;
-  font-weight: 600;
-  padding: 0.4rem 0.9rem;
-  border-radius: var(--radius-pill);
-  margin-bottom: 1.5rem;
-}
-.hero-badge .pulse {
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  background: var(--green);
-  animation: pulse 2s infinite;
-}
-@keyframes pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(76,175,120,0.6); }
-  50% { box-shadow: 0 0 0 6px rgba(76,175,120,0); }
-}
-.hero h1 {
-  font-family: var(--font-display);
-  font-size: clamp(2.2rem, 4.5vw, 3.6rem);
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-  margin-bottom: 1.5rem;
-}
-.hero h1 .highlight {
-  color: var(--green);
-  position: relative;
-}
-.hero-sub {
-  font-size: 1.1rem;
-  color: var(--muted);
-  line-height: 1.75;
-  margin-bottom: 2rem;
-  max-width: 480px;
-}
-.hero-actions {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin-bottom: 3rem;
-}
-.hero-proof {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-}
-.hero-proof-item {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.82rem;
-  color: var(--muted);
-}
-.hero-proof-item i { color: var(--green); font-size: 0.9rem; }
+/* ── COMO FUNCIONA ── */
+.how-section{padding:6rem 2rem;background:var(--navy-md)}
+.how-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:3rem;position:relative}
+.how-steps::before{content:'';position:absolute;top:27px;left:calc(16.67% + 2rem);right:calc(16.67% + 2rem);height:1px;background:linear-gradient(90deg,var(--green),rgba(76,175,120,0.08))}
+.hstep{text-align:center;position:relative;z-index:1;padding:0 1rem}
+.snum{width:54px;height:54px;border-radius:50%;background:var(--green);color:var(--navy);font-family:var(--font-display);font-size:1.25rem;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 1.2rem;box-shadow:0 0 0 8px rgba(76,175,120,0.09)}
+.hstep h4{font-family:var(--font-display);font-size:0.93rem;font-weight:700;margin-bottom:0.55rem}
+.hstep p{font-size:0.83rem;color:var(--muted);line-height:1.65}
+.step-time{display:inline-block;margin-top:0.7rem;background:rgba(76,175,120,0.09);border:1px solid rgba(76,175,120,0.2);color:var(--green-lt);font-size:0.7rem;font-weight:600;padding:0.22rem 0.7rem;border-radius:var(--radius-pill)}
 
-/* WhatsApp phone mockup */
-.phone-wrap {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-}
-.phone-glow-ring {
-  position: absolute;
-  width: 340px; height: 340px;
-  border-radius: 50%;
-  border: 1px solid rgba(76,175,120,0.15);
-  animation: ringPulse 3s ease-in-out infinite;
-}
-.phone-glow-ring:nth-child(2) {
-  width: 400px; height: 400px;
-  animation-delay: 1s;
-  border-color: rgba(76,175,120,0.08);
-}
-@keyframes ringPulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.05); opacity: 0.5; }
-}
-.phone {
-  position: relative;
-  z-index: 1;
-  width: 300px;
-  background: #111;
-  border-radius: 36px;
-  padding: 12px;
-  box-shadow:
-    0 0 0 1px rgba(255,255,255,0.08),
-    0 30px 80px rgba(0,0,0,0.5),
-    0 0 60px rgba(76,175,120,0.1);
-}
-.phone-screen {
-  background: #fff;
-  border-radius: 26px;
-  overflow: hidden;
-}
-.phone-wh-header {
-  background: #075E54;
-  padding: 12px 14px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.wh-avatar {
-  width: 36px; height: 36px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #4CAF78, #2E8B57);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 0.9rem;
-  color: white;
-  flex-shrink: 0;
-}
-.wh-info .name {
-  color: white;
-  font-size: 0.85rem;
-  font-weight: 600;
-  font-family: var(--font-body);
-}
-.wh-info .status {
-  color: #B2DFDB;
-  font-size: 0.68rem;
-  font-family: var(--font-body);
-}
-.phone-chat {
-  background: #ECE5DD;
-  padding: 12px;
-  min-height: 320px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200' opacity='0.03'%3E%3C/svg%3E");
-}
-.chat-msg {
-  max-width: 82%;
-  padding: 8px 12px;
-  border-radius: 12px;
-  font-size: 0.76rem;
-  line-height: 1.4;
-  font-family: var(--font-body);
-  color: #111;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-}
-.chat-msg.show { opacity: 1; transform: translateY(0); }
-.chat-msg.received {
-  background: #fff;
-  align-self: flex-start;
-  border-radius: 0 12px 12px 12px;
-}
-.chat-msg.sent {
-  background: #DCF8C6;
-  align-self: flex-end;
-  border-radius: 12px 0 12px 12px;
-  text-align: right;
-}
-.chat-msg .time {
-  font-size: 0.58rem;
-  color: #999;
-  margin-top: 3px;
-  display: block;
-}
-.typing-indicator {
-  display: flex;
-  gap: 4px;
-  align-items: center;
-  padding: 10px 14px;
-  background: #fff;
-  border-radius: 0 12px 12px 12px;
-  width: fit-content;
-  align-self: flex-start;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-.typing-indicator.show { opacity: 1; }
-.typing-indicator span {
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  background: #999;
-  animation: typingBounce 1.2s infinite;
-}
-.typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
-.typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-@keyframes typingBounce {
-  0%, 80%, 100% { transform: translateY(0); }
-  40% { transform: translateY(-6px); }
-}
+/* ── MÉTRICAS ── */
+.metrics-bar{padding:3.5rem 2rem;background:var(--navy-lt)}
+.metrics-grid{max-width:var(--max-w);margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+.mcard{text-align:center;padding:1.75rem 1rem}
+.mnum{font-family:var(--font-display);font-size:2.6rem;font-weight:800;color:var(--green);line-height:1;margin-bottom:0.45rem}
+.mnum.ora{color:var(--orange)}
+.mlbl{font-size:0.8rem;color:var(--muted);line-height:1.5}
 
-/* ============================================================
-   TRUST BAR
-   ============================================================ */
-.trust-bar {
-  background: rgba(255,255,255,0.03);
-  border-top: 1px solid rgba(255,255,255,0.06);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  padding: 1.5rem 2rem;
-}
-.trust-inner {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 3rem;
-  flex-wrap: wrap;
-}
-.trust-item {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-size: 0.85rem;
-  color: var(--muted);
-}
-.trust-item i { color: var(--green); }
-.trust-item strong { color: var(--white); }
-.trust-sep {
-  width: 1px; height: 24px;
-  background: rgba(255,255,255,0.1);
-}
+/* ── PLANOS ── */
+.plans-section{padding:6rem 2rem;background:var(--navy)}
+.urgency{background:rgba(224,122,74,0.08);border:1px solid rgba(224,122,74,0.22);border-radius:var(--radius);padding:1.1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;max-width:var(--max-w);margin:0 auto 3rem}
+.urg-txt{display:flex;align-items:center;gap:0.7rem;font-size:0.88rem;color:var(--white)}
+.urg-txt i{color:var(--orange);font-size:1.1rem}
+.urg-txt strong{color:var(--orange)}
+.slots{display:flex;gap:0.35rem}
+.slot{width:26px;height:26px;border-radius:6px;border:1px solid rgba(255,255,255,0.12)}
+.slot.t{background:rgba(255,255,255,0.08)}
+.slot.a{background:rgba(76,175,120,0.28);border-color:var(--green)}
+.plans-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:0;align-items:start}
+.plan{background:rgba(255,255,255,0.035);border:1px solid rgba(255,255,255,0.09);border-radius:var(--radius);padding:2rem;position:relative;transition:transform 0.28s}
+.plan.feat{background:var(--navy-lt);border-color:var(--green);border-width:2px;transform:scale(1.04)}
+.pbadge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--green);color:var(--navy);font-size:0.68rem;font-weight:800;letter-spacing:0.08em;text-transform:uppercase;padding:0.28rem 0.9rem;border-radius:var(--radius-pill);white-space:nowrap}
+.pname{font-family:var(--font-display);font-size:0.9rem;font-weight:700;margin-bottom:0.2rem}
+.pdesc{font-size:0.78rem;color:var(--muted);margin-bottom:1.4rem}
+.pprice{font-family:var(--font-display);font-size:2.3rem;font-weight:800;line-height:1;margin-bottom:0.2rem}
+.psetup{font-size:0.73rem;color:var(--muted);margin-bottom:0.5rem}
+.ptrinks{display:inline-flex;align-items:center;gap:0.4rem;background:rgba(76,175,120,0.08);border:1px solid rgba(76,175,120,0.18);border-radius:var(--radius-pill);padding:0.25rem 0.7rem;font-size:0.71rem;color:var(--green-lt);margin-bottom:1.4rem}
+.pfeats{list-style:none;display:flex;flex-direction:column;gap:0.6rem;margin-bottom:1.65rem}
+.pfeats li{display:flex;align-items:flex-start;gap:0.55rem;font-size:0.82rem;color:var(--muted);line-height:1.4}
+.pfeats li i{color:var(--green);font-size:0.8rem;flex-shrink:0;margin-top:3px}
+.pbtn{display:block;text-align:center;padding:0.72rem;border-radius:var(--radius-pill);font-weight:700;font-size:0.86rem;text-decoration:none;transition:all 0.22s;border:1.5px solid rgba(255,255,255,0.14);color:var(--white);font-family:var(--font-body);cursor:pointer;background:transparent;width:100%}
+.pbtn:hover{border-color:var(--green);color:var(--green)}
+.pbtn.gb{background:var(--green);border-color:var(--green);color:var(--navy)}
+.pbtn.gb:hover{background:var(--green-lt);box-shadow:0 6px 20px rgba(76,175,120,0.3)}
+.plans-notes{max-width:var(--max-w);margin:2rem auto 0;display:flex;flex-direction:column;gap:0.5rem;align-items:center}
+.plans-notes p{font-size:0.82rem;color:var(--muted);text-align:center;display:flex;align-items:center;gap:0.4rem}
+.plans-notes p i{color:var(--green)}
+.plans-notes a{color:var(--green);text-decoration:none}
+.plans-notes a:hover{text-decoration:underline}
 
-/* ============================================================
-   DOR SECTION
-   ============================================================ */
-.dor-section {
-  padding: var(--section-pad);
-  background: var(--navy);
-}
-.dor-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-  margin-top: 3rem;
-}
-.dor-card {
-  padding: 2rem;
-  border-radius: var(--radius);
-  border: 1px solid rgba(255,255,255,0.08);
-}
-.dor-card.problema {
-  background: rgba(255,255,255,0.03);
-}
-.dor-card.solucao {
-  background: rgba(76,175,120,0.07);
-  border-color: rgba(76,175,120,0.2);
-}
-.dor-card-title {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-weight: 700;
-  margin-bottom: 1.25rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.dor-card.problema .dor-card-title { color: #F87171; }
-.dor-card.solucao .dor-card-title { color: var(--green); }
-.dor-list {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-}
-.dor-list li {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  font-size: 0.9rem;
-  color: var(--muted);
-  line-height: 1.5;
-}
-.dor-list li .icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+/* ── FAQ ── */
+.faq-section{padding:6rem 2rem;background:var(--navy-md)}
+.faq-wrap{max-width:760px;margin:3rem auto 0;border-radius:var(--radius);overflow:hidden;border:1px solid rgba(255,255,255,0.07)}
+.faq-item{border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.018);transition:background 0.2s}
+.faq-item:last-child{border-bottom:none}
+.faq-item.open{background:rgba(76,175,120,0.045)}
+.faq-q{padding:1.2rem 1.5rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-weight:500;font-size:0.9rem;gap:1rem;transition:color 0.2s}
+.faq-item.open .faq-q{color:var(--green)}
+.faq-arr{color:var(--muted);transition:transform 0.3s;flex-shrink:0;font-size:0.75rem}
+.faq-item.open .faq-arr{transform:rotate(180deg);color:var(--green)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height 0.35s ease,padding 0.35s ease;font-size:0.85rem;color:var(--muted);line-height:1.75}
+.faq-item.open .faq-a{max-height:300px;padding:0 1.5rem 1.2rem}
 
-/* ============================================================
-   CASES DE USO
-   ============================================================ */
-.cases-section {
-  padding: var(--section-pad);
-  background: var(--navy-md);
-}
-.cases-tabs {
-  display: flex;
-  gap: 0.75rem;
-  margin-top: 2.5rem;
-  flex-wrap: wrap;
-}
-.case-tab {
-  padding: 0.6rem 1.25rem;
-  border-radius: var(--radius-pill);
-  border: 1px solid rgba(255,255,255,0.12);
-  background: transparent;
-  color: var(--muted);
-  font-family: var(--font-body);
-  font-size: 0.85rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.25s;
-}
-.case-tab.active, .case-tab:hover {
-  background: var(--green);
-  border-color: var(--green);
-  color: var(--navy);
-  font-weight: 700;
-}
-.cases-content {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  margin-top: 2.5rem;
-  align-items: start;
-}
-.case-info { display: none; }
-.case-info.active { display: block; }
-.case-persona {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-.case-avatar {
-  width: 52px; height: 52px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.2rem;
-  flex-shrink: 0;
-}
-.case-avatar.c1 { background: rgba(76,175,120,0.2); color: var(--green); }
-.case-avatar.c2 { background: rgba(224,122,74,0.2); color: var(--orange); }
-.case-avatar.c3 { background: rgba(127,119,221,0.2); color: var(--indigo); }
-.case-persona-info .persona-name {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1rem;
-}
-.case-persona-info .persona-ctx {
-  font-size: 0.82rem;
-  color: var(--muted);
-}
-.case-desc {
-  font-size: 0.95rem;
-  color: var(--muted);
-  line-height: 1.75;
-  margin-bottom: 1.5rem;
-}
-.case-result {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  background: rgba(76,175,120,0.1);
-  border: 1px solid rgba(76,175,120,0.2);
-  border-radius: var(--radius-sm);
-  padding: 0.85rem 1.1rem;
-  font-size: 0.88rem;
-  color: var(--green-lt);
-}
-.case-result i { font-size: 1.1rem; flex-shrink: 0; }
+/* ── CTA FINAL ── */
+.cta-section{padding:6rem 2rem;background:var(--navy);text-align:center;position:relative;overflow:hidden}
+.cta-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(76,175,120,0.07) 0%,transparent 60%),radial-gradient(ellipse at 70% 50%,rgba(224,122,74,0.05) 0%,transparent 60%)}
+.cta-inner{position:relative;z-index:1;max-width:660px;margin:0 auto}
+.cta-inner h2{font-family:var(--font-display);font-size:clamp(2rem,4vw,2.9rem);font-weight:800;letter-spacing:-0.02em;margin-bottom:1rem;line-height:1.15}
+.cta-inner p{color:var(--muted);font-size:1rem;margin-bottom:2.5rem}
+.cta-actions{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.cta-note{font-size:0.79rem;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:0.4rem}
+.cta-note i{color:var(--green)}
 
-/* Case chat */
-.case-chat {
-  background: #ECE5DD;
-  border-radius: var(--radius);
-  overflow: hidden;
-  display: none;
-}
-.case-chat.active { display: block; }
-.case-chat-header {
-  background: #075E54;
-  padding: 10px 14px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.case-chat-header .name {
-  color: white;
-  font-size: 0.82rem;
-  font-weight: 600;
-  font-family: var(--font-body);
-}
-.case-chat-header .st {
-  color: #B2DFDB;
-  font-size: 0.65rem;
-  font-family: var(--font-body);
-}
-.case-msgs {
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  min-height: 260px;
-}
-.cm {
-  max-width: 80%;
-  padding: 7px 11px;
-  border-radius: 10px;
-  font-size: 0.74rem;
-  line-height: 1.4;
-  font-family: var(--font-body);
-  color: #111;
-}
-.cm.r { background: #fff; align-self: flex-start; border-radius: 0 10px 10px 10px; }
-.cm.s { background: #DCF8C6; align-self: flex-end; border-radius: 10px 0 10px 10px; text-align: right; }
-.cm .t { font-size: 0.58rem; color: #999; margin-top: 2px; display: block; }
+/* ── FOOTER ── */
+footer{background:var(--navy-md);border-top:1px solid rgba(255,255,255,0.055);padding:2rem;text-align:center}
+footer p{font-size:0.77rem;color:var(--muted);line-height:1.85}
+footer a{color:var(--muted);text-decoration:none}
+footer a:hover{color:var(--white)}
+.flogo{font-family:var(--font-display);font-size:1rem;font-weight:700;margin-bottom:0.7rem}
+.flogo span{color:var(--green)}
 
-/* ============================================================
-   ROI CALCULATOR
-   ============================================================ */
-.roi-section {
-  padding: var(--section-pad);
-  background: var(--navy);
-  position: relative;
-  overflow: hidden;
-}
-.roi-section::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 50%;
-  transform: translateX(-50%);
-  width: 600px; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--green), transparent);
-}
-.roi-inner {
-  max-width: var(--max-w);
-  margin: 0 auto;
-}
-.roi-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  margin-top: 3rem;
-  align-items: start;
-}
-.roi-calculator {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: var(--radius);
-  padding: 2rem;
-}
-.roi-calculator h3 {
-  font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 700;
-  margin-bottom: 1.5rem;
-  color: var(--green);
-}
-.roi-field {
-  margin-bottom: 1.25rem;
-}
-.roi-field label {
-  display: block;
-  font-size: 0.82rem;
-  color: var(--muted);
-  margin-bottom: 0.4rem;
-  font-weight: 500;
-}
-.roi-field input[type="range"] {
-  width: 100%;
-  accent-color: var(--green);
-  cursor: pointer;
-}
-.roi-field .val-display {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 0.25rem;
-}
-.roi-field .val-display .val {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--white);
-}
-.roi-field .val-display .range-labels {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.68rem;
-  color: var(--muted);
-  width: 100%;
-  margin-top: 0.2rem;
-}
-.roi-results {
-  background: var(--navy-md);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: var(--radius);
-  padding: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-}
-.roi-results h3 {
-  font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 700;
-  margin-bottom: 0.25rem;
-  color: var(--muted);
-  font-size: 0.82rem;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-}
-.roi-metric {
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  padding-bottom: 1.25rem;
-}
-.roi-metric:last-child { border-bottom: none; padding-bottom: 0; }
-.roi-metric .metric-label {
-  font-size: 0.82rem;
-  color: var(--muted);
-  margin-bottom: 0.25rem;
-}
-.roi-metric .metric-value {
-  font-family: var(--font-display);
-  font-size: 2rem;
-  font-weight: 800;
-  color: var(--green);
-  line-height: 1;
-}
-.roi-metric .metric-value.orange { color: var(--orange); }
-.roi-metric .metric-sub {
-  font-size: 0.78rem;
-  color: var(--muted);
-  margin-top: 0.25rem;
-}
-.roi-payback {
-  background: rgba(76,175,120,0.1);
-  border: 1px solid rgba(76,175,120,0.25);
-  border-radius: var(--radius-sm);
-  padding: 1rem 1.25rem;
-  text-align: center;
-}
-.roi-payback .pb-label {
-  font-size: 0.78rem;
-  color: var(--green-lt);
-  margin-bottom: 0.3rem;
-}
-.roi-payback .pb-value {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  font-weight: 800;
-  color: var(--white);
-}
-
-/* ============================================================
-   FUNCIONALIDADES
-   ============================================================ */
-.features-section {
-  padding: var(--section-pad);
-  background: var(--navy-md);
-}
-.features-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.25rem;
-  margin-top: 3rem;
-}
-.feat-card {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: var(--radius);
-  padding: 1.75rem;
-  transition: all 0.3s ease;
-  cursor: default;
-}
-.feat-card:hover {
-  background: rgba(76,175,120,0.07);
-  border-color: rgba(76,175,120,0.2);
-  transform: translateY(-4px);
-}
-.feat-icon {
-  width: 48px; height: 48px;
-  border-radius: 12px;
-  background: rgba(76,175,120,0.12);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.3rem;
-  margin-bottom: 1.1rem;
-  color: var(--green);
-  transition: all 0.3s;
-}
-.feat-card:hover .feat-icon {
-  background: var(--green);
-  color: var(--navy);
-}
-.feat-card h4 {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 0.95rem;
-  margin-bottom: 0.5rem;
-}
-.feat-card p {
-  font-size: 0.84rem;
-  color: var(--muted);
-  line-height: 1.65;
-}
-.feat-card .feat-example {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid rgba(255,255,255,0.06);
-  font-size: 0.78rem;
-  color: var(--green-lt);
-  font-style: italic;
-  line-height: 1.5;
-}
-
-/* ============================================================
-   COMO FUNCIONA
-   ============================================================ */
-.how-section {
-  padding: var(--section-pad);
-  background: var(--navy);
-  position: relative;
-}
-.how-steps {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1rem;
-  margin-top: 3rem;
-  position: relative;
-}
-.how-steps::before {
-  content: '';
-  position: absolute;
-  top: 28px;
-  left: calc(16.67% + 2rem);
-  right: calc(16.67% + 2rem);
-  height: 1px;
-  background: linear-gradient(90deg, var(--green), rgba(76,175,120,0.1));
-}
-.how-step {
-  text-align: center;
-  position: relative;
-  z-index: 1;
-  padding: 0 1rem;
-}
-.step-num {
-  width: 56px; height: 56px;
-  border-radius: 50%;
-  background: var(--green);
-  color: var(--navy);
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  font-weight: 800;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 1.25rem;
-  box-shadow: 0 0 0 8px rgba(76,175,120,0.1);
-}
-.how-step h4 {
-  font-family: var(--font-display);
-  font-size: 0.95rem;
-  font-weight: 700;
-  margin-bottom: 0.6rem;
-}
-.how-step p {
-  font-size: 0.84rem;
-  color: var(--muted);
-  line-height: 1.65;
-}
-.how-step .step-time {
-  display: inline-block;
-  margin-top: 0.75rem;
-  background: rgba(76,175,120,0.1);
-  border: 1px solid rgba(76,175,120,0.2);
-  color: var(--green-lt);
-  font-size: 0.72rem;
-  font-weight: 600;
-  padding: 0.25rem 0.75rem;
-  border-radius: var(--radius-pill);
-}
-
-/* ============================================================
-   MÉTRICAS
-   ============================================================ */
-.metrics-section {
-  padding: 4rem 2rem;
-  background: var(--navy-lt);
-}
-.metrics-grid {
-  max-width: var(--max-w);
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
-}
-.metric-card {
-  text-align: center;
-  padding: 2rem 1rem;
-}
-.metric-num {
-  font-family: var(--font-display);
-  font-size: 2.8rem;
-  font-weight: 800;
-  color: var(--green);
-  line-height: 1;
-  margin-bottom: 0.5rem;
-}
-.metric-num.orange { color: var(--orange); }
-.metric-label {
-  font-size: 0.82rem;
-  color: var(--muted);
-  line-height: 1.5;
-}
-
-/* ============================================================
-   PLANOS
-   ============================================================ */
-.plans-section {
-  padding: var(--section-pad);
-  background: var(--navy);
-}
-.plans-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.25rem;
-  margin-top: 3rem;
-  align-items: start;
-}
-.plan-card {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: var(--radius);
-  padding: 2rem;
-  position: relative;
-  transition: transform 0.3s;
-}
-.plan-card.featured {
-  background: var(--navy-lt);
-  border-color: var(--green);
-  border-width: 2px;
-  transform: scale(1.04);
-}
-.plan-badge {
-  position: absolute;
-  top: -13px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--green);
-  color: var(--navy);
-  font-size: 0.7rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 0.3rem 1rem;
-  border-radius: var(--radius-pill);
-  white-space: nowrap;
-}
-.plan-name {
-  font-family: var(--font-display);
-  font-size: 0.9rem;
-  font-weight: 700;
-  margin-bottom: 0.25rem;
-}
-.plan-desc {
-  font-size: 0.8rem;
-  color: var(--muted);
-  margin-bottom: 1.5rem;
-}
-.plan-price {
-  font-family: var(--font-display);
-  font-size: 2.4rem;
-  font-weight: 800;
-  line-height: 1;
-  margin-bottom: 0.25rem;
-}
-.plan-price-setup {
-  font-size: 0.75rem;
-  color: var(--muted);
-  margin-bottom: 1.5rem;
-}
-.plan-features {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 0.65rem;
-  margin-bottom: 1.75rem;
-}
-.plan-features li {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.6rem;
-  font-size: 0.84rem;
-  color: var(--muted);
-  line-height: 1.4;
-}
-.plan-features li i { color: var(--green); font-size: 0.85rem; flex-shrink: 0; margin-top: 2px; }
-.plan-btn {
-  display: block;
-  text-align: center;
-  padding: 0.75rem;
-  border-radius: var(--radius-pill);
-  font-weight: 700;
-  font-size: 0.88rem;
-  text-decoration: none;
-  transition: all 0.25s;
-  border: 1.5px solid rgba(255,255,255,0.15);
-  color: var(--white);
-  font-family: var(--font-body);
-  cursor: pointer;
-  background: transparent;
-  width: 100%;
-}
-.plan-btn:hover { border-color: var(--green); color: var(--green); }
-.plan-btn.green-btn {
-  background: var(--green);
-  border-color: var(--green);
-  color: var(--navy);
-}
-.plan-btn.green-btn:hover {
-  background: var(--green-lt);
-  box-shadow: 0 6px 20px rgba(76,175,120,0.3);
-}
-.plans-note {
-  text-align: center;
-  margin-top: 2rem;
-  font-size: 0.84rem;
-  color: var(--muted);
-}
-.plans-note a { color: var(--green); text-decoration: none; }
-.plans-note a:hover { text-decoration: underline; }
-
-/* ============================================================
-   ESCASSEZ / URGÊNCIA
-   ============================================================ */
-.urgency-bar {
-  background: linear-gradient(90deg, rgba(224,122,74,0.15), rgba(224,122,74,0.05));
-  border: 1px solid rgba(224,122,74,0.25);
-  border-radius: var(--radius);
-  padding: 1.25rem 1.75rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-  flex-wrap: wrap;
-  max-width: var(--max-w);
-  margin: 0 auto 3rem;
-}
-.urgency-text {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-.urgency-text i { color: var(--orange); font-size: 1.2rem; }
-.urgency-text p { font-size: 0.9rem; color: var(--white); }
-.urgency-text p strong { color: var(--orange); }
-.urgency-slots {
-  display: flex;
-  gap: 0.4rem;
-}
-.slot {
-  width: 28px; height: 28px;
-  border-radius: 6px;
-  border: 1px solid rgba(255,255,255,0.15);
-}
-.slot.taken { background: rgba(255,255,255,0.1); }
-.slot.taken::after { display: none; }
-.slot.available { background: rgba(76,175,120,0.3); border-color: var(--green); }
-
-/* ============================================================
-   FAQ
-   ============================================================ */
-.faq-section {
-  padding: var(--section-pad);
-  background: var(--navy-md);
-}
-.faq-grid {
-  max-width: 780px;
-  margin: 3rem auto 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  border-radius: var(--radius);
-  overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.07);
-}
-.faq-item {
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-  background: rgba(255,255,255,0.02);
-  transition: background 0.2s;
-}
-.faq-item:last-child { border-bottom: none; }
-.faq-item.open { background: rgba(76,175,120,0.05); }
-.faq-q {
-  padding: 1.25rem 1.5rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: pointer;
-  font-weight: 500;
-  font-size: 0.93rem;
-  gap: 1rem;
-  transition: color 0.2s;
-}
-.faq-item.open .faq-q { color: var(--green); }
-.faq-q .faq-arr {
-  color: var(--muted);
-  transition: transform 0.3s;
-  flex-shrink: 0;
-  font-size: 0.8rem;
-}
-.faq-item.open .faq-arr { transform: rotate(180deg); color: var(--green); }
-.faq-a {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.35s ease, padding 0.35s ease;
-  font-size: 0.87rem;
-  color: var(--muted);
-  line-height: 1.75;
-}
-.faq-item.open .faq-a {
-  max-height: 300px;
-  padding: 0 1.5rem 1.25rem;
-}
-
-/* ============================================================
-   CTA FINAL
-   ============================================================ */
-.cta-section {
-  padding: var(--section-pad);
-  background: var(--navy);
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-.cta-section::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(ellipse at 30% 50%, rgba(76,175,120,0.08) 0%, transparent 60%),
-    radial-gradient(ellipse at 70% 50%, rgba(224,122,74,0.06) 0%, transparent 60%);
-}
-.cta-inner {
-  position: relative;
-  z-index: 1;
-  max-width: 680px;
-  margin: 0 auto;
-}
-.cta-inner h2 {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  margin-bottom: 1rem;
-  line-height: 1.15;
-}
-.cta-inner p {
-  color: var(--muted);
-  font-size: 1rem;
-  margin-bottom: 2.5rem;
-}
-.cta-actions {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin-bottom: 1.5rem;
-}
-.cta-note {
-  font-size: 0.8rem;
-  color: var(--muted);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-}
-.cta-note i { color: var(--green); }
-
-/* ============================================================
-   FOOTER
-   ============================================================ */
-footer {
-  background: var(--navy-md);
-  border-top: 1px solid rgba(255,255,255,0.06);
-  padding: 2rem;
-  text-align: center;
-}
-footer p {
-  font-size: 0.78rem;
-  color: var(--muted);
-  line-height: 1.8;
-}
-footer a { color: var(--muted); text-decoration: none; }
-footer a:hover { color: var(--white); }
-.footer-logo {
-  font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 700;
-  margin-bottom: 0.75rem;
-}
-.footer-logo span { color: var(--green); }
-
-/* ============================================================
-   RESPONSIVE
-   ============================================================ */
-@media (max-width: 900px) {
-  .nav-links { display: none; }
-  .nav-hamburger { display: block; }
-  .hero-inner { grid-template-columns: 1fr; gap: 3rem; }
-  .phone-wrap { display: none; }
-  .dor-grid { grid-template-columns: 1fr; }
-  .cases-content { grid-template-columns: 1fr; }
-  .roi-grid { grid-template-columns: 1fr; }
-  .features-grid { grid-template-columns: 1fr 1fr; }
-  .how-steps { grid-template-columns: 1fr; }
-  .how-steps::before { display: none; }
-  .metrics-grid { grid-template-columns: 1fr 1fr; }
-  .plans-grid { grid-template-columns: 1fr; }
-  .plan-card.featured { transform: none; }
-  .trust-sep { display: none; }
-}
-@media (max-width: 600px) {
-  .features-grid { grid-template-columns: 1fr; }
-  .metrics-grid { grid-template-columns: 1fr 1fr; }
-  section, .dor-section, .cases-section, .roi-section, .features-section, .how-section, .plans-section, .faq-section, .cta-section {
-    padding: 4rem 1.25rem;
-  }
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .nav-links{display:none}
+  .hero-inner{grid-template-columns:1fr;gap:2.5rem}
+  .phone-wrap{display:none}
+  .diff-inner{grid-template-columns:1fr}
+  .dor-grid{grid-template-columns:1fr}
+  .cases-content{grid-template-columns:1fr}
+  .fidel-grid{grid-template-columns:1fr 1fr}
+  .roi-grid{grid-template-columns:1fr}
+  .how-steps{grid-template-columns:1fr}
+  .how-steps::before{display:none}
+  .metrics-grid{grid-template-columns:1fr 1fr}
+  .plans-grid{grid-template-columns:1fr}
+  .plan.feat{transform:none}
+  .tsep{display:none}
+}
+@media(max-width:600px){
+  .fidel-grid{grid-template-columns:1fr}
+  .metrics-grid{grid-template-columns:1fr 1fr}
+  .section-pad,.dor-section,.cases-section,.fidel-section,.roi-section,.how-section,.plans-section,.faq-section,.cta-section{padding:4rem 1.25rem}
 }
 </style>
 </head>
 <body>
 
-<!-- ============================================================
-     NAV
-     ============================================================ -->
-<nav class="nav" id="navbar">
+<!-- NAV -->
+<nav class="nav" id="nav">
   <a href="https://www.nextaflow.com.br" class="nav-logo">
     Bella<span class="dot">.</span>IA
     <span class="by">by NextaFlow</span>
   </a>
   <ul class="nav-links">
     <li><a href="#casos">Casos de uso</a></li>
-    <li><a href="#funcionalidades">Funcionalidades</a></li>
+    <li><a href="#fidelizacao">Fidelização</a></li>
     <li><a href="#roi">Calcular ROI</a></li>
     <li><a href="#planos">Planos</a></li>
   </ul>
   <a href="https://wa.me/5533991090996?text=Oi!+Quero+saber+mais+sobre+a+Bella+IA+para+minha+Trinks" class="btn btn-green nav-cta" target="_blank">
     <i class="fa-brands fa-whatsapp"></i> Falar com consultor
   </a>
-  <button class="nav-hamburger" id="hamburger" aria-label="Menu">
-    <i class="fa-solid fa-bars"></i>
-  </button>
 </nav>
 
-<!-- ============================================================
-     HERO
-     ============================================================ -->
+<!-- HERO -->
 <section class="hero">
   <div class="hero-grid"></div>
   <div class="hero-glow"></div>
   <div class="hero-glow2"></div>
-
-  <div class="hero-inner container">
+  <div class="hero-inner">
     <div>
-      <div class="hero-badge">
-        <span class="pulse"></span>
-        Exclusivo para usuários da Trinks
+      <div class="hero-badge"><span class="pulse-dot"></span> Exclusivo para usuários da Trinks</div>
+      <div class="badge-48">
+        <div class="num">48h</div>
+        <div class="txt"><strong>Bella ativa no seu WhatsApp</strong>Enquanto concorrentes levam 30 dias</div>
       </div>
-      <h1>
-        Quantos clientes<br>
-        você perdeu<br>
-        <span class="highlight">ontem à noite?</span>
-      </h1>
-      <p class="hero-sub">
-        Bella é o único agente de IA integrado nativamente à sua agenda Trinks.
-        Atende no WhatsApp, consulta horários e fecha agendamentos —
-        enquanto você trabalha ou dorme.
-      </p>
+      <h1>Quantos clientes você perdeu<br><span class="hl">ontem à noite?</span></h1>
+      <p class="hero-sub">Bella é o único agente de IA integrado nativamente à sua agenda Trinks. Atende no WhatsApp, agenda, confirma, fideliza e solicita avaliações no Google — 24 horas por dia, sem você precisar tocar no celular.</p>
       <div class="hero-actions">
-        <a href="https://wa.me/5533991090996?text=Oi!+Quero+ativar+a+Bella+IA+no+meu+sal%C3%A3o" class="btn btn-green" target="_blank">
-          <i class="fa-brands fa-whatsapp"></i> Ativar em 48 horas
-        </a>
-        <a href="#roi" class="btn btn-outline">
-          <i class="fa-solid fa-calculator"></i> Calcular meu ROI
-        </a>
+        <a href="https://wa.me/5533991090996?text=Oi!+Quero+ativar+a+Bella+IA+no+meu+sal%C3%A3o" class="btn btn-green" target="_blank"><i class="fa-brands fa-whatsapp"></i> Ativar em 48 horas</a>
+        <a href="#roi" class="btn btn-outline"><i class="fa-solid fa-calculator"></i> Calcular meu ROI</a>
       </div>
       <div class="hero-proof">
-        <div class="hero-proof-item"><i class="fa-solid fa-check-circle"></i> Integração API oficial Trinks</div>
-        <div class="hero-proof-item"><i class="fa-solid fa-check-circle"></i> Sem trocar de sistema</div>
-        <div class="hero-proof-item"><i class="fa-solid fa-check-circle"></i> Sem fidelidade</div>
+        <div class="proof-item"><i class="fa-solid fa-check-circle"></i> API oficial Trinks</div>
+        <div class="proof-item"><i class="fa-solid fa-check-circle"></i> Sem trocar de sistema</div>
+        <div class="proof-item"><i class="fa-solid fa-check-circle"></i> Sem fidelidade</div>
+        <div class="proof-item"><i class="fa-solid fa-check-circle"></i> Garantia 30 dias</div>
       </div>
     </div>
-
-    <!-- Phone mockup animado -->
     <div class="phone-wrap">
-      <div class="phone-glow-ring"></div>
-      <div class="phone-glow-ring"></div>
-      <div class="phone" id="heroPhone">
+      <div class="ring"></div>
+      <div class="ring"></div>
+      <div class="phone">
         <div class="phone-screen">
-          <div class="phone-wh-header">
-            <div class="wh-avatar">B</div>
-            <div class="wh-info">
-              <div class="name">Bella — Studio Élise</div>
-              <div class="status">● online agora</div>
-            </div>
+          <div class="wh-header">
+            <div class="wh-av">B</div>
+            <div><div class="wh-name">Bella — Studio Élise</div><div class="wh-st">● online agora</div></div>
           </div>
-          <div class="phone-chat" id="heroChat">
-            <!-- Mensagens injetadas por JS -->
-          </div>
+          <div class="chat-area" id="heroChat"></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============================================================
-     TRUST BAR
-     ============================================================ -->
+<!-- TRUST BAR -->
 <div class="trust-bar">
   <div class="trust-inner">
-    <div class="trust-item"><i class="fa-solid fa-plug-circle-check"></i> <strong>API oficial</strong> integrada à Trinks</div>
-    <div class="trust-sep"></div>
+    <div class="trust-item"><i class="fa-solid fa-plug-circle-check"></i> <strong>API oficial</strong> Trinks</div>
+    <div class="tsep"></div>
     <div class="trust-item"><i class="fa-solid fa-bolt"></i> Ativo em <strong>48 horas</strong></div>
-    <div class="trust-sep"></div>
-    <div class="trust-item"><i class="fa-solid fa-shield-halved"></i> <strong>Agenda protegida</strong> — zero risco</div>
-    <div class="trust-sep"></div>
-    <div class="trust-item"><i class="fa-brands fa-whatsapp"></i> Funciona no seu <strong>número atual</strong></div>
-    <div class="trust-sep"></div>
+    <div class="tsep"></div>
+    <div class="trust-item"><i class="fa-solid fa-shield-halved"></i> <strong>Agenda protegida</strong></div>
+    <div class="tsep"></div>
+    <div class="trust-item"><i class="fa-brands fa-whatsapp"></i> Seu <strong>número atual</strong></div>
+    <div class="tsep"></div>
+    <div class="trust-item"><i class="fa-solid fa-star"></i> Solicita <strong>avaliações Google</strong></div>
+    <div class="tsep"></div>
     <div class="trust-item"><i class="fa-solid fa-clock"></i> Atendimento <strong>24h / 7 dias</strong></div>
   </div>
 </div>
 
-<!-- ============================================================
-     DOR VS SOLUÇÃO
-     ============================================================ -->
+<!-- DIFERENCIAL 48H vs MERCADO -->
+<section class="diff-section">
+  <div class="diff-inner container">
+    <div>
+      <div class="section-label reveal">Por que a Bella?</div>
+      <h2 class="section-title reveal d1">A diferença que você sente<br>já na primeira semana.</h2>
+      <p class="section-sub reveal d2">Enquanto outras soluções levam até 30 dias para você ver resultados, a Bella está ativa no seu WhatsApp em 48 horas. Cada dia sem ela é faturamento perdido.</p>
+      <div style="margin-top:2rem" class="reveal d3">
+        <div class="proof-item" style="margin-bottom:0.75rem;font-size:0.9rem"><i class="fa-solid fa-check-circle" style="color:var(--green)"></i> Setup feito pela nossa equipe — você não mexe em nada</div>
+        <div class="proof-item" style="margin-bottom:0.75rem;font-size:0.9rem"><i class="fa-solid fa-check-circle" style="color:var(--green)"></i> Tom de voz personalizado com a identidade do seu negócio</div>
+        <div class="proof-item" style="margin-bottom:0.75rem;font-size:0.9rem"><i class="fa-solid fa-check-circle" style="color:var(--green)"></i> Suporte próximo em português, por um time brasileiro</div>
+        <div class="proof-item" style="font-size:0.9rem"><i class="fa-solid fa-check-circle" style="color:var(--green)"></i> Garantia: se não se pagar em 30 dias, devolvemos a mensalidade</div>
+      </div>
+    </div>
+    <div class="diff-card reveal d2">
+      <h3><i class="fa-solid fa-code-compare"></i> Bella vs outras soluções</h3>
+      <div class="diff-row">
+        <div class="diff-label">Tempo para ativação</div>
+        <div class="diff-bella"><i class="fa-solid fa-bolt" style="color:var(--orange)"></i> 48 horas</div>
+        <div class="diff-lucy">até 30 dias</div>
+      </div>
+      <div class="diff-row">
+        <div class="diff-label">Agendamento autônomo</div>
+        <div class="diff-bella"><i class="fa-solid fa-check"></i> Sim</div>
+        <div class="diff-lucy">Sim</div>
+      </div>
+      <div class="diff-row">
+        <div class="diff-label">Avaliações no Google</div>
+        <div class="diff-bella"><i class="fa-solid fa-check"></i> Sim</div>
+        <div class="diff-lucy">Plano pago extra</div>
+      </div>
+      <div class="diff-row">
+        <div class="diff-label">Follow-up de retorno</div>
+        <div class="diff-bella"><i class="fa-solid fa-check"></i> Incluso</div>
+        <div class="diff-lucy">Plano pago extra</div>
+      </div>
+      <div class="diff-row">
+        <div class="diff-label">Mensagem de aniversário</div>
+        <div class="diff-bella"><i class="fa-solid fa-check"></i> Incluso</div>
+        <div class="diff-lucy">Não informado</div>
+      </div>
+      <div class="diff-row">
+        <div class="diff-label">Upsell automático</div>
+        <div class="diff-bella"><i class="fa-solid fa-check"></i> Sim</div>
+        <div class="diff-lucy">Não informado</div>
+      </div>
+      <div class="diff-row">
+        <div class="diff-label">Garantia de resultado</div>
+        <div class="diff-bella"><i class="fa-solid fa-check"></i> 30 dias</div>
+        <div class="diff-lucy">Não informado</div>
+      </div>
+      <div class="diff-row">
+        <div class="diff-label">Preço (até 4 profissionais)</div>
+        <div class="diff-bella" style="color:var(--green)">R$ 297–447</div>
+        <div class="diff-lucy">R$ 386–616</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DOR VS SOLUÇÃO -->
 <section class="dor-section">
   <div class="container">
     <div class="section-label reveal">O problema real</div>
-    <h2 class="section-title reveal reveal-delay-1">
-      Cada mensagem sem resposta<br>é dinheiro indo para a concorrência.
-    </h2>
-    <p class="section-sub reveal reveal-delay-2">
-      Não é falta de esforço. É impossível estar em dois lugares ao mesmo tempo.
-      A Bella resolve isso de forma permanente.
-    </p>
+    <h2 class="section-title reveal d1">Cada mensagem sem resposta<br>é dinheiro indo para a concorrência.</h2>
+    <p class="section-sub reveal d2">Não é falta de esforço. É impossível estar em dois lugares ao mesmo tempo. A Bella resolve isso de forma permanente.</p>
     <div class="dor-grid">
-      <div class="dor-card problema reveal">
-        <div class="dor-card-title"><i class="fa-solid fa-triangle-exclamation"></i> Sem Bella</div>
+      <div class="dor-card prob reveal">
+        <div class="dor-title"><i class="fa-solid fa-triangle-exclamation"></i> Sem Bella</div>
         <ul class="dor-list">
-          <li><span class="icon">😓</span> Cliente manda mensagem domingo às 22h — sem resposta</li>
-          <li><span class="icon">📵</span> Recepcionista ocupada, WhatsApp lotado de pendências</li>
-          <li><span class="icon">💸</span> Clientes marcam com quem responde mais rápido</li>
-          <li><span class="icon">📉</span> No-show sem confirmação prévia, horário vazio</li>
-          <li><span class="icon">😤</span> Horas do seu dia respondendo sempre as mesmas perguntas</li>
-          <li><span class="icon">🔁</span> Reagendamentos manuais que demoram e irritam o cliente</li>
+          <li><span class="ico">😓</span> Mensagem às 22h de domingo — sem resposta até segunda</li>
+          <li><span class="ico">📵</span> Recepcionista ocupada, WhatsApp lotado de pendências</li>
+          <li><span class="ico">💸</span> Clientes marcam com quem responde mais rápido</li>
+          <li><span class="ico">📉</span> No-show sem confirmação, horário vazio no meio do dia</li>
+          <li><span class="ico">😤</span> Horas respondendo sempre as mesmas perguntas</li>
+          <li><span class="ico">⭐</span> Poucas avaliações no Google, visibilidade baixa</li>
+          <li><span class="ico">👻</span> Clientes somem e nunca mais voltam sem nenhum contato</li>
         </ul>
       </div>
-      <div class="dor-card solucao reveal reveal-delay-1">
-        <div class="dor-card-title"><i class="fa-solid fa-circle-check"></i> Com Bella IA</div>
+      <div class="dor-card sol reveal d1">
+        <div class="dor-title"><i class="fa-solid fa-circle-check"></i> Com Bella IA</div>
         <ul class="dor-list">
-          <li><span class="icon">🌙</span> Atendimento às 23h, fins de semana e feriados sem custo extra</li>
-          <li><span class="icon">⚡</span> Resposta em segundos — o cliente não espera</li>
-          <li><span class="icon">📅</span> Agendamento concluído direto na Trinks, sem intervenção</li>
-          <li><span class="icon">🔔</span> Confirmação automática: até 40% menos faltas</li>
-          <li><span class="icon">🧘</span> Sua equipe foca em quem está no salão</li>
-          <li><span class="icon">✨</span> Reagendamento autônomo que mantém o horário na agenda</li>
+          <li><span class="ico">🌙</span> Atendimento às 23h, fins de semana e feriados sem custo extra</li>
+          <li><span class="ico">⚡</span> Resposta em segundos — o cliente não espera e não vai embora</li>
+          <li><span class="ico">📅</span> Agendamento concluído direto na Trinks, sem intervenção</li>
+          <li><span class="ico">🔔</span> Confirmação automática: até 40% menos faltas</li>
+          <li><span class="ico">🧘</span> Sua equipe foca totalmente em quem está no salão</li>
+          <li><span class="ico">⭐</span> Solicita avaliação 5 estrelas no Google após cada atendimento</li>
+          <li><span class="ico">💌</span> Follow-up automático traz clientes inativos de volta</li>
         </ul>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============================================================
-     CASOS DE USO
-     ============================================================ -->
+<!-- CASOS DE USO -->
 <section class="cases-section" id="casos">
   <div class="container">
     <div class="section-label reveal">Casos de uso reais</div>
-    <h2 class="section-title reveal reveal-delay-1">
-      Veja a Bella em ação<br>nas situações do dia a dia.
-    </h2>
-    <p class="section-sub reveal reveal-delay-2">
-      Situações reais que acontecem todo dia em salões e clínicas.
-      É exatamente assim que a Bella responde.
-    </p>
-
-    <div class="cases-tabs reveal reveal-delay-3">
-      <button class="case-tab active" data-case="0">🌙 Agendamento noturno</button>
-      <button class="case-tab" data-case="1">🔁 Cancelamento de última hora</button>
-      <button class="case-tab" data-case="2">💬 Dúvida + upsell</button>
+    <h2 class="section-title reveal d1">Veja a Bella em ação<br>nas situações do dia a dia.</h2>
+    <p class="section-sub reveal d2">Situações que acontecem todo dia em salões e clínicas. É exatamente assim que a Bella responde.</p>
+    <div class="cases-tabs reveal d3">
+      <button class="ctab active" data-case="0">🌙 Agendamento noturno</button>
+      <button class="ctab" data-case="1">🔁 Cancelamento salvo</button>
+      <button class="ctab" data-case="2">⭐ Avaliação no Google</button>
+      <button class="ctab" data-case="3">💌 Cliente inativo</button>
     </div>
-
     <div class="cases-content">
-      <!-- Caso 0 -->
-      <div class="case-info active" data-case="0">
-        <div class="case-persona">
-          <div class="case-avatar c1">C</div>
-          <div class="case-persona-info">
-            <div class="persona-name">Camila, 34 anos</div>
-            <div class="persona-ctx">Domingo, 22h47 — fora do horário comercial</div>
-          </div>
-        </div>
-        <p class="case-desc">
-          Camila trabalha o dia todo e só consegue pensar em agendar no salão quando chega em casa à noite.
-          Sem a Bella, essa mensagem ficaria sem resposta até segunda-feira — tempo suficiente para ela marcar com a concorrência.
-          Com a Bella, o horário foi fechado em menos de 1 minuto.
-        </p>
-        <div class="case-result">
-          <i class="fa-solid fa-arrow-trend-up"></i>
-          Resultado: agendamento convertido às 22h47, sem nenhuma intervenção humana.
-          Faturamento que seria perdido: recuperado.
-        </div>
+      <div class="cinfo active" data-case="0">
+        <div class="persona-row"><div class="pav c1">C</div><div><div class="pname">Camila, 34 anos</div><div class="pctx">Domingo, 22h47 — fora do horário comercial</div></div></div>
+        <p class="cdesc">Camila trabalha o dia todo e só consegue pensar em agendar quando chega em casa à noite. Sem a Bella, essa mensagem ficaria sem resposta até segunda-feira — tempo suficiente para ela marcar com outra clínica. Com a Bella, o horário foi fechado em menos de 1 minuto.</p>
+        <div class="cresult"><i class="fa-solid fa-arrow-trend-up"></i> Agendamento convertido às 22h47 sem nenhuma intervenção humana. Faturamento que seria perdido: recuperado.</div>
       </div>
-      <div class="case-info" data-case="1">
-        <div class="case-persona">
-          <div class="case-avatar c2">R</div>
-          <div class="case-persona-info">
-            <div class="persona-name">Rafael, 28 anos</div>
-            <div class="persona-ctx">Terça, 10h15 — 45 min antes do horário</div>
-          </div>
-        </div>
-        <p class="case-desc">
-          Rafael cancelou o horário de última hora — situação que normalmente deixa um buraco na agenda e prejuízo no dia.
-          A Bella não aceitou a perda: ofereceu imediatamente os próximos horários disponíveis e reagendou o cliente,
-          mantendo o faturamento e sem precisar envolver a recepção.
-        </p>
-        <div class="case-result">
-          <i class="fa-solid fa-arrow-trend-up"></i>
-          Resultado: horário realocado em menos de 3 minutos. Zero perda de faturamento.
-        </div>
+      <div class="cinfo" data-case="1">
+        <div class="persona-row"><div class="pav c2">R</div><div><div class="pname">Rafael, 28 anos</div><div class="pctx">Terça, 10h15 — 45 min antes do horário</div></div></div>
+        <p class="cdesc">Rafael cancelou de última hora — situação que normalmente deixa um buraco na agenda e prejuízo no dia. A Bella não aceitou a perda: ofereceu imediatamente os próximos horários disponíveis e reagendou, mantendo o faturamento sem envolver ninguém da equipe.</p>
+        <div class="cresult"><i class="fa-solid fa-arrow-trend-up"></i> Horário realocado em menos de 3 minutos. Zero perda de faturamento no dia.</div>
       </div>
-      <div class="case-info" data-case="2">
-        <div class="case-persona">
-          <div class="case-avatar c3">A</div>
-          <div class="case-persona-info">
-            <div class="persona-name">Ana Paula, 41 anos</div>
-            <div class="persona-ctx">Sábado, 14h03 — durante atendimento</div>
-          </div>
-        </div>
-        <p class="case-desc">
-          Ana Paula perguntou o preço de um serviço. A Bella respondeu, mas não parou aí:
-          identificou que ela era cliente recorrente de coloração e sugeriu um horário disponível para hidratação complementar.
-          A recepcionista estava atendendo — sem a Bella, a mensagem ficaria sem resposta por horas.
-        </p>
-        <div class="case-result">
-          <i class="fa-solid fa-arrow-trend-up"></i>
-          Resultado: dúvida respondida + upsell de serviço adicional convertido automaticamente.
-        </div>
+      <div class="cinfo" data-case="2">
+        <div class="persona-row"><div class="pav c1">M</div><div><div class="pname">Marina, 29 anos</div><div class="pctx">Após atendimento — coloring completo</div></div></div>
+        <p class="cdesc">Logo após o atendimento, a Bella envia automaticamente uma mensagem agradecendo a visita e pedindo uma avaliação no Google. O processo é simples e o link já vai direto. Salões que usam esse fluxo acumulam avaliações 5 estrelas consistentemente, melhorando sua visibilidade local.</p>
+        <div class="cresult"><i class="fa-solid fa-arrow-trend-up"></i> Avaliação 5 estrelas recebida automaticamente. Sem pedir pessoalmente, sem awkwardness.</div>
+      </div>
+      <div class="cinfo" data-case="3">
+        <div class="persona-row"><div class="pav c3">P</div><div><div class="pname">Patrícia, 45 anos</div><div class="pctx">Sem visita há 45 dias — cliente recorrente</div></div></div>
+        <p class="cdesc">A Bella identificou que Patrícia é cliente frequente e não volta há 45 dias. Enviou automaticamente uma mensagem personalizada com o nome dela, mencionando o serviço que ela costuma fazer e oferecendo um horário próximo. Esse tipo de contato recupera clientes que simplesmente esqueceram de agendar.</p>
+        <div class="cresult"><i class="fa-solid fa-arrow-trend-up"></i> Cliente inativa por 45 dias reconvertida sem nenhum esforço da equipe.</div>
       </div>
 
-      <!-- Chats correspondentes -->
-      <div class="case-chat active" data-case="0">
-        <div class="case-chat-header">
-          <div class="wh-avatar" style="width:30px;height:30px;font-size:0.75rem">B</div>
-          <div><div class="name">Bella — Studio Élise</div><div class="st">● online</div></div>
-        </div>
-        <div class="case-msgs">
-          <div class="cm r">Oi! Tem horário pra corte com a Jú amanhã?<span class="t">22:47</span></div>
-          <div class="cm s">Oi, Camila! 😊 Deixa eu verificar a agenda da Ju pra segunda-feira...<span class="t">22:47</span></div>
-          <div class="cm s">Ela tem disponível às <strong>10h</strong>, <strong>14h</strong> e <strong>16h30</strong>. Qual fica melhor?<span class="t">22:47</span></div>
-          <div class="cm r">14h perfeito!<span class="t">22:48</span></div>
-          <div class="cm s">✅ Pronto! Corte com a Ju na segunda às 14h agendado. Você recebe um lembrete na véspera. Até lá! 💛<span class="t">22:48</span></div>
+      <!-- Chats -->
+      <div class="cchat active" data-case="0">
+        <div class="cchat-hdr"><div class="wh-av" style="width:28px;height:28px;font-size:0.72rem">B</div><div><div class="cn">Bella — Studio Élise</div><div class="cs">● online</div></div></div>
+        <div class="cmsgs">
+          <div class="cmsg r">Oi! Tem horário pra corte com a Jú amanhã?<span class="t">22:47</span></div>
+          <div class="cmsg s">Oi, Camila! 😊 Deixa eu verificar a agenda da Ju pra segunda...<span class="t">22:47</span></div>
+          <div class="cmsg s">Ela tem disponível às <strong>10h</strong>, <strong>14h</strong> e <strong>16h30</strong>. Qual fica melhor?<span class="t">22:47</span></div>
+          <div class="cmsg r">14h perfeito!<span class="t">22:48</span></div>
+          <div class="cmsg s">✅ Pronto! Corte com a Ju na segunda às 14h. Você recebe um lembrete na véspera. Até lá! 💛<span class="t">22:48</span></div>
         </div>
       </div>
-      <div class="case-chat" data-case="1">
-        <div class="case-chat-header">
-          <div class="wh-avatar" style="width:30px;height:30px;font-size:0.75rem">B</div>
-          <div><div class="name">Bella — Studio Élise</div><div class="st">● online</div></div>
-        </div>
-        <div class="case-msgs">
-          <div class="cm r">Oi, preciso cancelar o horário das 11h de hoje 😔<span class="t">10:15</span></div>
-          <div class="cm s">Tudo bem, Rafael! Entendemos. 😊 Quer que eu já verifique os próximos horários disponíveis pra você?<span class="t">10:15</span></div>
-          <div class="cm r">Sim, quero remarcar<span class="t">10:16</span></div>
-          <div class="cm s">Temos quinta às <strong>11h</strong> ou <strong>15h</strong>, e sexta às <strong>10h30</strong>. Qual prefere?<span class="t">10:16</span></div>
-          <div class="cm r">Quinta às 15h<span class="t">10:17</span></div>
-          <div class="cm s">✅ Reagendado! Quinta-feira às 15h. Te vejo lá! 👋<span class="t">10:17</span></div>
+      <div class="cchat" data-case="1">
+        <div class="cchat-hdr"><div class="wh-av" style="width:28px;height:28px;font-size:0.72rem">B</div><div><div class="cn">Bella — Studio Élise</div><div class="cs">● online</div></div></div>
+        <div class="cmsgs">
+          <div class="cmsg r">Oi, preciso cancelar o horário das 11h de hoje 😔<span class="t">10:15</span></div>
+          <div class="cmsg s">Tudo bem, Rafael! 😊 Quer que eu já verifique os próximos horários pra você remarcar?<span class="t">10:15</span></div>
+          <div class="cmsg r">Sim, quero remarcar<span class="t">10:16</span></div>
+          <div class="cmsg s">Temos quinta às <strong>11h</strong> ou <strong>15h</strong>, e sexta às <strong>10h30</strong>. Qual prefere?<span class="t">10:16</span></div>
+          <div class="cmsg r">Quinta às 15h<span class="t">10:17</span></div>
+          <div class="cmsg s">✅ Reagendado! Quinta-feira às 15h. Te vejo lá! 👋<span class="t">10:17</span></div>
         </div>
       </div>
-      <div class="case-chat" data-case="2">
-        <div class="case-chat-header">
-          <div class="wh-avatar" style="width:30px;height:30px;font-size:0.75rem">B</div>
-          <div><div class="name">Bella — Studio Élise</div><div class="st">● online</div></div>
+      <div class="cchat" data-case="2">
+        <div class="cchat-hdr"><div class="wh-av" style="width:28px;height:28px;font-size:0.72rem">B</div><div><div class="cn">Bella — Studio Élise</div><div class="cs">● online</div></div></div>
+        <div class="cmsgs">
+          <div class="cmsg s">Oi, Marina! 💛 Obrigada pela visita hoje! Esperamos que tenha amado o resultado.<span class="t">17:30</span></div>
+          <div class="cmsg s">Poderia nos deixar uma avaliaçãozinha no Google? Leva menos de 1 minuto e nos ajuda muito! 🙏<br><br>👉 <strong>seulink.google.com/avalie</strong><span class="t">17:30</span></div>
+          <div class="cmsg r">Claro! Merece muito 🌟🌟🌟🌟🌟<span class="t">17:34</span></div>
+          <div class="cmsg s">Que gentileza! 😍 Ficamos felizes demais. Até a próxima visita, Marina! 💛<span class="t">17:34</span></div>
         </div>
-        <div class="case-msgs">
-          <div class="cm r">Oi! Qual o valor da coloração completa?<span class="t">14:03</span></div>
-          <div class="cm s">Oi, Ana Paula! A coloração completa está R$ 180. Inclui lavagem e finalização. 💇‍♀️<span class="t">14:03</span></div>
-          <div class="cm r">Ótimo! Vou agendar em breve<span class="t">14:04</span></div>
-          <div class="cm s">Que ótimo! 😊 Vi que você costuma fazer coloração conosco. Que tal já garantir um horário? Temos amanhã às 10h e 14h disponíveis. E aproveito pra sugerir uma hidratação complementar — mantém a cor por muito mais tempo!<span class="t">14:04</span></div>
-          <div class="cm r">Amanhã às 10h com hidratação também! 😍<span class="t">14:05</span></div>
-          <div class="cm s">✅ Marcado! Coloração + hidratação amanhã às 10h. Vai adorar o resultado! 💛<span class="t">14:05</span></div>
+      </div>
+      <div class="cchat" data-case="3">
+        <div class="cchat-hdr"><div class="wh-av" style="width:28px;height:28px;font-size:0.72rem">B</div><div><div class="cn">Bella — Studio Élise</div><div class="cs">● online</div></div></div>
+        <div class="cmsgs">
+          <div class="cmsg s">Oi, Patrícia! 💛 Faz um tempinho que não te vemos por aqui...<span class="t">10:00</span></div>
+          <div class="cmsg s">Já está na hora de renovar a coloração? 😊 Temos horários disponíveis essa semana. Quer que eu verifique?<span class="t">10:00</span></div>
+          <div class="cmsg r">Oi! Nossa, realmente faz tempo! Que horários têm?<span class="t">10:08</span></div>
+          <div class="cmsg s">Quinta às <strong>14h</strong> e sexta às <strong>10h</strong> ou <strong>15h30</strong>. Qual fica bom? 😊<span class="t">10:08</span></div>
+          <div class="cmsg r">Quinta às 14h! Me coloca aí 😍<span class="t">10:09</span></div>
+          <div class="cmsg s">✅ Feito! Quinta às 14h. Saudade de te ver por aqui! 💛<span class="t">10:09</span></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============================================================
-     ROI CALCULATOR
-     ============================================================ -->
+<!-- FIDELIZAÇÃO -->
+<section class="fidel-section" id="fidelizacao">
+  <div class="container">
+    <div class="section-label reveal">Muito além do agendamento</div>
+    <h2 class="section-title reveal d1">A Bella fideliza, engaja<br>e transforma clientes em fãs.</h2>
+    <p class="section-sub reveal d2">Enquanto outros agentes só agendam, a Bella trabalha o relacionamento com o cliente antes, durante e depois do atendimento.</p>
+    <div class="fidel-grid">
+      <div class="fidel-card reveal">
+        <div class="fidel-icon"><i class="fa-solid fa-calendar-check"></i></div>
+        <h4>Agendamento autônomo</h4>
+        <p>Consulta disponibilidade na Trinks em tempo real e fecha o horário direto no WhatsApp, sem nenhuma intervenção.</p>
+        <div class="fex">"Tem horário sábado?" → verifica → agenda → confirma. Tudo em 40 segundos.</div>
+      </div>
+      <div class="fidel-card reveal d1">
+        <div class="fidel-icon"><i class="fa-solid fa-bell"></i></div>
+        <h4>Lembretes e confirmações</h4>
+        <p>Envia lembretes automáticos antes do horário e pede confirmação de presença, reduzindo faltas em até 40%.</p>
+        <div class="fex">"Seu horário é amanhã às 14h. Confirma? (S/N)" — simples e certeiro.</div>
+      </div>
+      <div class="fidel-card reveal d2">
+        <div class="fidel-icon"><i class="fa-solid fa-star"></i></div>
+        <h4>Avaliações no Google</h4>
+        <p>Após cada atendimento, solicita avaliação 5 estrelas com link direto. Mais reputação online, mais clientes novos.</p>
+        <div class="fex">Salões parceiros acumulam 3–5 avaliações novas por dia no piloto.</div>
+      </div>
+      <div class="fidel-card reveal">
+        <div class="fidel-icon"><i class="fa-brands fa-instagram"></i></div>
+        <h4>Seguidores no Instagram</h4>
+        <p>Na mensagem de boas-vindas, convida o cliente a seguir o perfil do salão, ampliando organicamente o alcance nas redes.</p>
+        <div class="fex">"Segue a gente no Instagram e fique por dentro das novidades! 📸"</div>
+      </div>
+      <div class="fidel-card reveal d1">
+        <div class="fidel-icon"><i class="fa-solid fa-cake-candles"></i></div>
+        <h4>Mensagem de aniversário</h4>
+        <p>No dia do aniversário do cliente, envia parabenização personalizada — opcionalmente com um benefício especial para reforçar o vínculo.</p>
+        <div class="fex">"Feliz aniversário, Ana! 🎉 Que tal se presentear com um horário especial hoje?"</div>
+      </div>
+      <div class="fidel-card reveal d2">
+        <div class="fidel-icon"><i class="fa-solid fa-rotate-left"></i></div>
+        <h4>Follow-up de retorno</h4>
+        <p>Clientes que somem por mais de X dias recebem uma mensagem personalizada com o nome e o serviço que costumam fazer.</p>
+        <div class="fex">"Faz 45 dias que não te vemos! Quer renovar a coloração essa semana?" ← Patrícia volta.</div>
+      </div>
+      <div class="fidel-card reveal">
+        <div class="fidel-icon"><i class="fa-solid fa-sparkles"></i></div>
+        <h4>Upsell automático</h4>
+        <p>Identifica o histórico do cliente e sugere serviços complementares no momento certo, aumentando o ticket sem esforço.</p>
+        <div class="fex">Agenda corte → Bella sugere hidratação no mesmo dia → +R$ 60 no ticket médio.</div>
+      </div>
+      <div class="fidel-card reveal d1">
+        <div class="fidel-icon"><i class="fa-solid fa-handshake"></i></div>
+        <h4>Transbordo humano</h4>
+        <p>Quando o assunto é delicado ou complexo, notifica a equipe para assumir — sem sumir e sem deixar o cliente esperando.</p>
+        <div class="fex">Reclamação ou situação incomum → aviso imediato para a recepção assumir a conversa.</div>
+      </div>
+      <div class="fidel-card reveal d2">
+        <div class="fidel-icon"><i class="fa-solid fa-chart-line"></i></div>
+        <h4>Pesquisa de satisfação</h4>
+        <p>Após o atendimento, coleta nota de satisfação. Se for baixa, aciona o gerente antes que o cliente vá reclamar no Google.</p>
+        <div class="fex">Problema capturado internamente → resolvido antes de virar avaliação negativa pública.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROI -->
 <section class="roi-section" id="roi">
-  <div class="roi-inner">
+  <div class="container">
     <div class="section-label reveal">Calculadora de ROI</div>
-    <h2 class="section-title reveal reveal-delay-1">
-      Descubra quanto você está<br>perdendo sem a Bella.
-    </h2>
-    <p class="section-sub reveal reveal-delay-2">
-      Ajuste os valores para o seu negócio e veja o impacto real em reais por mês.
-    </p>
-
+    <h2 class="section-title reveal d1">Descubra quanto você está<br>perdendo sem a Bella.</h2>
+    <p class="section-sub reveal d2">Ajuste os valores do seu negócio e veja o impacto real em reais por mês.</p>
     <div class="roi-grid">
-      <div class="roi-calculator reveal">
+      <div class="roi-calc reveal">
         <h3><i class="fa-solid fa-sliders"></i> Dados do seu negócio</h3>
-
         <div class="roi-field">
           <label>Clientes atendidos por semana</label>
-          <input type="range" id="rClientes" min="20" max="300" value="80" step="10">
-          <div class="val-display">
-            <span class="val" id="vClientes">80 clientes</span>
-          </div>
+          <input type="range" id="rC" min="20" max="300" value="80" step="10">
+          <div class="val-row"><span class="val-num" id="vC">80 clientes/sem.</span></div>
         </div>
-
         <div class="roi-field">
-          <label>Ticket médio por serviço (R$)</label>
-          <input type="range" id="rTicket" min="50" max="500" value="120" step="10">
-          <div class="val-display">
-            <span class="val" id="vTicket">R$ 120</span>
-          </div>
+          <label>Ticket médio por serviço</label>
+          <input type="range" id="rT" min="50" max="500" value="120" step="10">
+          <div class="val-row"><span class="val-num" id="vT">R$ 120</span></div>
         </div>
-
         <div class="roi-field">
           <label>% de mensagens fora do horário comercial</label>
-          <input type="range" id="rFora" min="5" max="50" value="25" step="5">
-          <div class="val-display">
-            <span class="val" id="vFora">25%</span>
-          </div>
+          <input type="range" id="rF" min="5" max="50" value="25" step="5">
+          <div class="val-row"><span class="val-num" id="vF">25%</span></div>
         </div>
-
         <div class="roi-field">
-          <label>Taxa de conversão atual fora do horário (%)</label>
-          <input type="range" id="rConv" min="0" max="60" value="10" step="5">
-          <div class="val-display">
-            <span class="val" id="vConv">10%</span>
-          </div>
+          <label>Taxa de conversão atual fora do horário</label>
+          <input type="range" id="rV" min="0" max="60" value="10" step="5">
+          <div class="val-row"><span class="val-num" id="vV">10%</span></div>
         </div>
       </div>
-
-      <div class="roi-results reveal reveal-delay-1">
-        <div style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);font-weight:700;margin-bottom:0.5rem">
-          Seu resultado estimado
+      <div class="roi-res reveal d1">
+        <div class="roi-lbl">Seu resultado estimado</div>
+        <div class="rmet">
+          <div class="ml">Agendamentos perdidos por mês</div>
+          <div class="mv ora" id="rP">—</div>
+          <div class="ms">mensagens que viram clientes da concorrência</div>
         </div>
-
-        <div class="roi-metric">
-          <div class="metric-label">Agendamentos perdidos por mês</div>
-          <div class="metric-value orange" id="rPerdidos">—</div>
-          <div class="metric-sub">mensagens sem resposta que viram clientes da concorrência</div>
+        <div class="rmet">
+          <div class="ml">Faturamento perdido por mês</div>
+          <div class="mv" id="rFat">—</div>
+          <div class="ms">valor que a Bella pode recuperar trabalhando 24h</div>
         </div>
-
-        <div class="roi-metric">
-          <div class="metric-label">Faturamento perdido por mês</div>
-          <div class="metric-value" id="rFaturamento">—</div>
-          <div class="metric-sub">valor que a Bella pode recuperar trabalhando 24h</div>
+        <div class="rmet">
+          <div class="ml">Com Bella: agendamentos recuperados</div>
+          <div class="mv" id="rRec">—</div>
+          <div class="ms">estimativa com taxa de conversão de 65% da Bella</div>
         </div>
-
-        <div class="roi-metric">
-          <div class="metric-label">Com Bella: agendamentos recuperados</div>
-          <div class="metric-value" id="rRecuperados">—</div>
-          <div class="metric-sub">estimativa com taxa de conversão de 65% da Bella</div>
+        <div class="payback-box">
+          <div class="pbl">A Bella se paga em</div>
+          <div class="pbv" id="rPB">—</div>
         </div>
-
-        <div class="roi-payback">
-          <div class="pb-label">A Bella se paga em</div>
-          <div class="pb-value" id="rPayback">—</div>
-        </div>
-
-        <a href="https://wa.me/5533991090996?text=Quero+ativar+a+Bella+IA" class="btn btn-green" style="width:100%;justify-content:center;margin-top:0.5rem" target="_blank">
+        <a href="https://wa.me/5533991090996?text=Quero+ativar+a+Bella+IA" class="btn btn-green" style="width:100%;justify-content:center;margin-top:0.75rem" target="_blank">
           <i class="fa-brands fa-whatsapp"></i> Quero recuperar esse faturamento
         </a>
       </div>
@@ -1651,446 +689,286 @@ footer a:hover { color: var(--white); }
   </div>
 </section>
 
-<!-- ============================================================
-     FUNCIONALIDADES
-     ============================================================ -->
-<section class="features-section" id="funcionalidades">
-  <div class="container">
-    <div class="section-label reveal">O que a Bella faz</div>
-    <h2 class="section-title reveal reveal-delay-1">
-      Seis superpoderes que trabalham<br>por você o tempo todo.
-    </h2>
-    <div class="features-grid">
-      <div class="feat-card reveal">
-        <div class="feat-icon"><i class="fa-solid fa-calendar-check"></i></div>
-        <h4>Agendamento autônomo</h4>
-        <p>Consulta disponibilidade na Trinks em tempo real e confirma o horário direto no WhatsApp do cliente, sem nenhuma intervenção.</p>
-        <div class="feat-example">"Tem horário pra sábado?" → Bella verifica → agenda → confirma. Tudo em 40 segundos.</div>
-      </div>
-      <div class="feat-card reveal reveal-delay-1">
-        <div class="feat-icon"><i class="fa-solid fa-arrows-rotate"></i></div>
-        <h4>Reagendamento inteligente</h4>
-        <p>Cancelamentos viram oportunidades. A Bella oferece imediatamente os próximos horários e fecha o reagendamento sozinha.</p>
-        <div class="feat-example">Cliente cancela → Bella oferece alternativas → novo horário marcado. Zero perda de faturamento.</div>
-      </div>
-      <div class="feat-card reveal reveal-delay-2">
-        <div class="feat-icon"><i class="fa-solid fa-bell"></i></div>
-        <h4>Lembretes e confirmações</h4>
-        <p>Envia lembretes automáticos antes do horário e pede confirmação de presença, reduzindo no-shows em até 40%.</p>
-        <div class="feat-example">"Sua consulta é amanhã às 14h. Confirma presença? (S/N)" — simples e eficaz.</div>
-      </div>
-      <div class="feat-card reveal">
-        <div class="feat-icon"><i class="fa-solid fa-message-smile"></i></div>
-        <h4>Dúvidas frequentes</h4>
-        <p>Responde sobre serviços, preços, formas de pagamento, localização e políticas — com as informações do seu estabelecimento.</p>
-        <div class="feat-example">Perguntas que tomam 10 minutos do dia viram respostas instantâneas em qualquer horário.</div>
-      </div>
-      <div class="feat-card reveal reveal-delay-1">
-        <div class="feat-icon"><i class="fa-solid fa-handshake"></i></div>
-        <h4>Transbordo humano</h4>
-        <p>Quando o assunto é delicado ou complexo, a Bella avisa sua equipe para assumir a conversa — sem sumir e sem deixar o cliente esperando.</p>
-        <div class="feat-example">Reclamação, negociação ou pedido incomum → notificação para a recepção assumir em segundos.</div>
-      </div>
-      <div class="feat-card reveal reveal-delay-2">
-        <div class="feat-icon"><i class="fa-solid fa-sparkles"></i></div>
-        <h4>Upsell automático</h4>
-        <p>Identifica o perfil do cliente e sugere serviços complementares no momento certo, aumentando o ticket médio sem esforço.</p>
-        <div class="feat-example">Cliente agenda corte → Bella sugere hidratação disponível no mesmo dia. +30% no ticket médio.</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
-     COMO FUNCIONA
-     ============================================================ -->
+<!-- COMO FUNCIONA -->
 <section class="how-section">
   <div class="container">
     <div class="section-label reveal" style="text-align:center">Implementação</div>
-    <h2 class="section-title reveal reveal-delay-1" style="text-align:center">
-      Da assinatura à Bella ativa:<br>48 horas. A gente cuida de tudo.
-    </h2>
-    <p class="section-sub reveal reveal-delay-2" style="text-align:center;margin:0 auto">
-      Você não precisa mexer em nenhum sistema, instalar nada ou entender de tecnologia.
-    </p>
+    <h2 class="section-title reveal d1" style="text-align:center">Da assinatura à Bella ativa:<br>48 horas. A gente cuida de tudo.</h2>
+    <p class="section-sub reveal d2" style="text-align:center;margin:0 auto">Você não precisa mexer em nenhum sistema, instalar nada ou entender de tecnologia.</p>
     <div class="how-steps">
-      <div class="how-step reveal">
-        <div class="step-num">1</div>
+      <div class="hstep reveal">
+        <div class="snum">1</div>
         <h4>Você nos envia os dados</h4>
-        <p>Preenchemos um formulário rápido: serviços, profissionais, horários e o estilo de atendimento do seu negócio.</p>
+        <p>Preenchemos juntos um formulário rápido: serviços, profissionais, horários e o estilo de atendimento do seu negócio.</p>
         <span class="step-time">⏱ Dia 1 — 15 minutos</span>
       </div>
-      <div class="how-step reveal reveal-delay-1">
-        <div class="step-num">2</div>
+      <div class="hstep reveal d1">
+        <div class="snum">2</div>
         <h4>A gente configura tudo</h4>
-        <p>Conectamos a Bella à sua Trinks via API, personalizamos o tom de voz e testamos todos os fluxos de conversa.</p>
+        <p>Conectamos a Bella à sua Trinks via API, personalizamos o tom de voz e testamos todos os fluxos antes de ativar.</p>
         <span class="step-time">⏱ Dia 1–2 — sem intervenção sua</span>
       </div>
-      <div class="how-step reveal reveal-delay-2">
-        <div class="step-num">3</div>
+      <div class="hstep reveal d2">
+        <div class="snum">3</div>
         <h4>Bella entra em campo</h4>
-        <p>Ativamos no seu WhatsApp e a Bella começa a atender. Você acompanha em tempo real — e pode intervir quando quiser.</p>
-        <span class="step-time">⏱ Dia 2 — funcionando 24h</span>
+        <p>Ativamos no seu WhatsApp e a Bella começa a atender. Você acompanha e pode intervir quando quiser.</p>
+        <span class="step-time">⏱ Dia 2 — 24h no ar</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============================================================
-     MÉTRICAS
-     ============================================================ -->
-<div class="metrics-section">
-  <div class="metrics-grid">
-    <div class="metric-card reveal">
-      <div class="metric-num">+35%</div>
-      <div class="metric-label">agendamentos fora do horário comercial</div>
-    </div>
-    <div class="metric-card reveal reveal-delay-1">
-      <div class="metric-num">–40%</div>
-      <div class="metric-label">no-shows com confirmação automática</div>
-    </div>
-    <div class="metric-card reveal reveal-delay-2">
-      <div class="metric-num orange">3s</div>
-      <div class="metric-label">tempo médio de resposta para o cliente</div>
-    </div>
-    <div class="metric-card reveal reveal-delay-3">
-      <div class="metric-num">48h</div>
-      <div class="metric-label">da assinatura ao agente ativo</div>
-    </div>
+<!-- MÉTRICAS -->
+<div class="metrics-bar">
+  <div class="metrics-grid container">
+    <div class="mcard reveal"><div class="mnum">+35%</div><div class="mlbl">agendamentos fora do horário comercial</div></div>
+    <div class="mcard reveal d1"><div class="mnum">–40%</div><div class="mlbl">no-shows com confirmação automática</div></div>
+    <div class="mcard reveal d2"><div class="mnum ora">3s</div><div class="mlbl">tempo médio de resposta ao cliente</div></div>
+    <div class="mcard reveal d3"><div class="mnum">48h</div><div class="mlbl">da assinatura ao agente ativo</div></div>
   </div>
 </div>
 
-<!-- ============================================================
-     PLANOS
-     ============================================================ -->
+<!-- PLANOS -->
 <section class="plans-section" id="planos">
   <div class="container">
-    <!-- Urgência -->
-    <div class="urgency-bar reveal">
-      <div class="urgency-text">
-        <i class="fa-solid fa-fire"></i>
-        <p>Onboardings disponíveis neste mês: <strong>apenas 3 vagas restantes.</strong> Configurações simultâneas são limitadas para garantir qualidade.</p>
-      </div>
-      <div class="urgency-slots">
-        <div class="slot taken"></div>
-        <div class="slot taken"></div>
-        <div class="slot taken"></div>
-        <div class="slot taken"></div>
-        <div class="slot taken"></div>
-        <div class="slot taken"></div>
-        <div class="slot taken"></div>
-        <div class="slot available"></div>
-        <div class="slot available"></div>
-        <div class="slot available"></div>
+    <div class="urgency reveal">
+      <div class="urg-txt"><i class="fa-solid fa-fire"></i><p>Onboardings disponíveis este mês: <strong>apenas 3 vagas.</strong> Configurações simultâneas são limitadas para garantir qualidade.</p></div>
+      <div class="slots">
+        <div class="slot t"></div><div class="slot t"></div><div class="slot t"></div><div class="slot t"></div>
+        <div class="slot t"></div><div class="slot t"></div><div class="slot t"></div>
+        <div class="slot a"></div><div class="slot a"></div><div class="slot a"></div>
       </div>
     </div>
-
     <div class="section-label reveal" style="text-align:center">Planos</div>
-    <h2 class="section-title reveal reveal-delay-1" style="text-align:center">
-      Simples, transparente,<br>sem fidelidade.
-    </h2>
-    <p class="section-sub reveal reveal-delay-2" style="text-align:center;margin:0 auto">
-      Taxa de configuração única + mensalidade. Cancele quando quiser, sem multa.
-    </p>
-
+    <h2 class="section-title reveal d1" style="text-align:center">Simples, transparente,<br>sem fidelidade.</h2>
+    <p class="section-sub reveal d2" style="text-align:center;margin:0 auto 3rem">Taxa de configuração única + mensalidade. Cancele quando quiser, sem multa.</p>
     <div class="plans-grid">
       <!-- Essencial -->
-      <div class="plan-card reveal">
-        <div class="plan-name">Essencial</div>
-        <div class="plan-desc">Para salões em crescimento</div>
-        <div class="plan-price">R$ 197</div>
-        <div class="plan-price-setup">por mês · + R$ 297 configuração única</div>
-        <ul class="plan-features">
-          <li><i class="fa-solid fa-check"></i> Agendamento e consulta de horários</li>
-          <li><i class="fa-solid fa-check"></i> Lembretes automáticos</li>
+      <div class="plan reveal">
+        <div class="pname">Essencial</div>
+        <div class="pdesc">Para salões em crescimento</div>
+        <div class="pprice">R$ 297</div>
+        <div class="psetup">por mês · + R$ 397 configuração única</div>
+        <div class="ptrinks"><i class="fa-solid fa-circle-info"></i> + API Trinks a partir de R$ 60/mês</div>
+        <ul class="pfeats">
+          <li><i class="fa-solid fa-check"></i> Agendamento autônomo 24h</li>
+          <li><i class="fa-solid fa-check"></i> Lembretes e confirmações</li>
           <li><i class="fa-solid fa-check"></i> Dúvidas frequentes respondidas</li>
-          <li><i class="fa-solid fa-check"></i> Até 1 profissional ou sala</li>
+          <li><i class="fa-solid fa-check"></i> Mensagem de boas-vindas</li>
+          <li><i class="fa-solid fa-check"></i> Convite para seguir no Instagram</li>
+          <li><i class="fa-solid fa-check"></i> Até 2 profissionais</li>
           <li><i class="fa-solid fa-check"></i> Suporte via WhatsApp</li>
         </ul>
-        <a href="https://wa.me/5533991090996?text=Quero+o+plano+Essencial+da+Bella+IA" class="plan-btn" target="_blank">Começar agora</a>
+        <a href="https://wa.me/5533991090996?text=Quero+o+plano+Essencial+da+Bella+IA" class="pbtn" target="_blank">Começar agora</a>
       </div>
-
       <!-- Profissional -->
-      <div class="plan-card featured reveal reveal-delay-1">
-        <div class="plan-badge">Mais escolhido</div>
-        <div class="plan-name">Profissional</div>
-        <div class="plan-desc">Para salões com equipe</div>
-        <div class="plan-price">R$ 347</div>
-        <div class="plan-price-setup">por mês · + R$ 297 configuração única</div>
-        <ul class="plan-features">
+      <div class="plan feat reveal d1">
+        <div class="pbadge">Mais escolhido</div>
+        <div class="pname">Profissional</div>
+        <div class="pdesc">Para salões com equipe</div>
+        <div class="pprice">R$ 447</div>
+        <div class="psetup">por mês · + R$ 397 configuração única</div>
+        <div class="ptrinks"><i class="fa-solid fa-circle-info"></i> + API Trinks a partir de R$ 60/mês</div>
+        <ul class="pfeats">
           <li><i class="fa-solid fa-check"></i> Tudo do Essencial</li>
           <li><i class="fa-solid fa-check"></i> Até 5 profissionais</li>
           <li><i class="fa-solid fa-check"></i> Reagendamento autônomo</li>
+          <li><i class="fa-solid fa-check"></i> Avaliações 5★ no Google</li>
+          <li><i class="fa-solid fa-check"></i> Mensagem de aniversário</li>
+          <li><i class="fa-solid fa-check"></i> Follow-up de clientes inativos</li>
+          <li><i class="fa-solid fa-check"></i> Upsell automático</li>
+          <li><i class="fa-solid fa-check"></i> Pesquisa de satisfação</li>
           <li><i class="fa-solid fa-check"></i> Transbordo humano</li>
           <li><i class="fa-solid fa-check"></i> Tom de voz personalizado</li>
-          <li><i class="fa-solid fa-check"></i> Upsell automático</li>
-          <li><i class="fa-solid fa-check"></i> Relatório mensal de desempenho</li>
+          <li><i class="fa-solid fa-check"></i> Relatório mensal</div></li>
         </ul>
-        <a href="https://wa.me/5533991090996?text=Quero+o+plano+Profissional+da+Bella+IA" class="plan-btn green-btn" target="_blank">Quero este plano</a>
+        <a href="https://wa.me/5533991090996?text=Quero+o+plano+Profissional+da+Bella+IA" class="pbtn gb" target="_blank">Quero este plano</a>
       </div>
-
       <!-- Premium -->
-      <div class="plan-card reveal reveal-delay-2">
-        <div class="plan-name">Premium</div>
-        <div class="plan-desc">Para clínicas e redes</div>
-        <div class="plan-price">R$ 597</div>
-        <div class="plan-price-setup">por mês · + R$ 497 configuração única</div>
-        <ul class="plan-features">
+      <div class="plan reveal d2">
+        <div class="pname">Premium</div>
+        <div class="pdesc">Para clínicas e redes</div>
+        <div class="pprice">R$ 697</div>
+        <div class="psetup">por mês · + R$ 497 configuração única</div>
+        <div class="ptrinks"><i class="fa-solid fa-circle-info"></i> + API Trinks a partir de R$ 60/mês</div>
+        <ul class="pfeats">
           <li><i class="fa-solid fa-check"></i> Tudo do Profissional</li>
           <li><i class="fa-solid fa-check"></i> Profissionais ilimitados</li>
           <li><i class="fa-solid fa-check"></i> Múltiplas unidades</li>
-          <li><i class="fa-solid fa-check"></i> Upsell e retenção automatizados</li>
+          <li><i class="fa-solid fa-check"></i> Campanhas de retenção avançadas</li>
           <li><i class="fa-solid fa-check"></i> Onboarding dedicado</li>
           <li><i class="fa-solid fa-check"></i> SLA de suporte prioritário</li>
         </ul>
-        <a href="https://wa.me/5533991090996?text=Quero+o+plano+Premium+da+Bella+IA" class="plan-btn" target="_blank">Falar com consultor</a>
+        <a href="https://wa.me/5533991090996?text=Quero+o+plano+Premium+da+Bella+IA" class="pbtn" target="_blank">Falar com consultor</a>
       </div>
     </div>
-
-    <p class="plans-note reveal">
-      💬 Não sabe qual plano escolher?
-      <a href="https://wa.me/5533991090996" target="_blank">Fale com a gente no WhatsApp</a>
-      e indicamos o melhor para o seu negócio. Resposta em menos de 4 horas.
-    </p>
-    <p class="plans-note reveal" style="margin-top:0.5rem">
-      <i class="fa-solid fa-shield-halved" style="color:var(--green)"></i>
-      Se a Bella não se pagar nos primeiros 30 dias, devolvemos a mensalidade. Sem burocracia.
-    </p>
+    <div class="plans-notes reveal">
+      <p><i class="fa-solid fa-circle-info"></i> A API Trinks (a partir de R$ 60/mês) é contratada diretamente com a Trinks, separada dos planos acima.</p>
+      <p><i class="fa-solid fa-shield-halved"></i> <strong style="color:var(--white)">Garantia:</strong> se a Bella não se pagar nos primeiros 30 dias, devolvemos a mensalidade. Sem burocracia.</p>
+      <p>Dúvidas sobre qual plano escolher? <a href="https://wa.me/5533991090996" target="_blank">Fale com a gente</a> — respondemos em menos de 4 horas.</p>
+    </div>
   </div>
 </section>
 
-<!-- ============================================================
-     FAQ
-     ============================================================ -->
+<!-- FAQ -->
 <section class="faq-section">
   <div class="container">
     <div class="section-label reveal" style="text-align:center">Dúvidas frequentes</div>
-    <h2 class="section-title reveal reveal-delay-1" style="text-align:center">
-      Suas perguntas, respondidas.
-    </h2>
-    <div class="faq-grid" id="faq">
+    <h2 class="section-title reveal d1" style="text-align:center">Suas perguntas, respondidas.</h2>
+    <div class="faq-wrap" id="faq">
       <div class="faq-item">
         <div class="faq-q">A Bella pode bagunçar minha agenda na Trinks? <i class="fa-solid fa-chevron-down faq-arr"></i></div>
-        <div class="faq-a">Não. A Bella só agenda em horários já disponíveis na Trinks, respeitando profissionais, intervalos e bloqueios que você já configurou. Ela nunca sobrescreve um horário existente. É literalmente impossível ela criar um conflito de agenda.</div>
+        <div class="faq-a">Não. A Bella só agenda em horários disponíveis na Trinks, respeitando profissionais, intervalos e bloqueios que você já configurou. Ela nunca sobrescreve um horário existente — é literalmente impossível criar um conflito de agenda.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q">Preciso trocar de número de WhatsApp? <i class="fa-solid fa-chevron-down faq-arr"></i></div>
-        <div class="faq-a">Não. A Bella é ativada no seu número atual — seja ele pessoal ou profissional. Seus clientes continuam falando no mesmo contato que já conhecem.</div>
+        <div class="faq-a">Não. A Bella é ativada no seu número atual — seja pessoal ou profissional. Seus clientes continuam falando no mesmo contato que já conhecem.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q">E se o cliente quiser falar com um humano? <i class="fa-solid fa-chevron-down faq-arr"></i></div>
-        <div class="faq-a">A Bella reconhece quando o assunto exige atenção humana e notifica sua equipe para assumir. Ela também identifica palavras que indicam insatisfação ou urgência e transfere imediatamente. O cliente nunca fica sem resposta.</div>
+        <div class="faq-a">A Bella reconhece quando o assunto exige atenção humana e notifica sua equipe imediatamente. Ela também identifica sinais de insatisfação e faz o transbordo antes que o cliente se irrite. Ninguém fica sem resposta.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">O que é a API Trinks e por que preciso contratar? <i class="fa-solid fa-chevron-down faq-arr"></i></div>
+        <div class="faq-a">A API Trinks é um acesso técnico à sua agenda que a Trinks disponibiliza separadamente. Ela permite que a Bella leia e escreva na sua agenda em tempo real. O custo começa em R$ 60/mês e é cobrado diretamente pela Trinks — você geralmente consegue desconto de 50% no período inicial.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q">Tem contrato de fidelidade ou multa de cancelamento? <i class="fa-solid fa-chevron-down faq-arr"></i></div>
-        <div class="faq-a">Nenhum. Você paga a taxa de configuração única (cobrada uma vez) e a mensalidade. Pode cancelar a qualquer momento sem multa, bastando avisar com 30 dias de antecedência.</div>
+        <div class="faq-a">Nenhum. Você paga a taxa de configuração uma vez e a mensalidade enquanto quiser usar. Pode cancelar a qualquer momento sem multa, bastando avisar com 30 dias de antecedência.</div>
       </div>
       <div class="faq-item">
-        <div class="faq-q">A Bella funciona se eu não usar a Trinks? <i class="fa-solid fa-chevron-down faq-arr"></i></div>
-        <div class="faq-a">A Bella foi desenvolvida especificamente para a integração com a Trinks. Para outros sistemas de agendamento, entre em contato — avaliamos caso a caso.</div>
-      </div>
-      <div class="faq-item">
-        <div class="faq-q">Meus dados e os dados dos clientes estão seguros? <i class="fa-solid fa-chevron-down faq-arr"></i></div>
-        <div class="faq-a">Sim. Toda comunicação é criptografada. Não armazenamos histórico de conversas além do necessário para o funcionamento do agente, e seguimos a LGPD. Seus dados não são compartilhados com terceiros.</div>
+        <div class="faq-q">Quanto tempo leva para a Bella estar funcionando? <i class="fa-solid fa-chevron-down faq-arr"></i></div>
+        <div class="faq-a">48 horas após a assinatura e o preenchimento do formulário de onboarding. Nossa equipe cuida de toda a configuração — você não precisa fazer nada além de nos dar as informações do seu negócio.</div>
       </div>
       <div class="faq-item">
         <div class="faq-q">Posso personalizar o jeito que a Bella fala? <i class="fa-solid fa-chevron-down faq-arr"></i></div>
-        <div class="faq-a">Sim. Durante o onboarding você define o tom — mais formal, mais descontraído, com ou sem emojis, com o nome que preferir. A Bella fala como o seu negócio, não como um robô genérico.</div>
+        <div class="faq-a">Sim. Durante o onboarding você define o tom — mais formal, mais descontraído, com ou sem emojis, com o nome que preferir para o agente. A Bella fala como o seu negócio, não como um robô genérico.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Os dados dos meus clientes estão seguros? <i class="fa-solid fa-chevron-down faq-arr"></i></div>
+        <div class="faq-a">Sim. Toda comunicação é criptografada. Seguimos a LGPD e não compartilhamos dados com terceiros. As informações dos seus clientes são usadas exclusivamente para operar o agente no seu estabelecimento.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============================================================
-     CTA FINAL
-     ============================================================ -->
+<!-- CTA FINAL -->
 <section class="cta-section">
   <div class="cta-inner">
     <div class="section-label reveal" style="display:block;text-align:center">Pronto para começar?</div>
-    <h2 class="reveal reveal-delay-1">
-      Seu salão merece uma assistente que nunca descansa.
-    </h2>
-    <p class="reveal reveal-delay-2">
-      Entre em contato agora. Respondemos em menos de 4 horas em dias úteis.<br>
-      A Bella pode estar ativa no seu WhatsApp ainda esta semana.
-    </p>
-    <div class="cta-actions reveal reveal-delay-3">
-      <a href="https://wa.me/5533991090996?text=Oi!+Quero+ativar+a+Bella+IA+no+meu+sal%C3%A3o+ou+cl%C3%ADnica" class="btn btn-green" target="_blank" style="font-size:1rem;padding:1rem 2rem">
-        <i class="fa-brands fa-whatsapp"></i> Falar com consultor no WhatsApp
-      </a>
-      <a href="mailto:nextaflow.ia@gmail.com" class="btn btn-outline" style="font-size:1rem;padding:1rem 2rem">
-        <i class="fa-solid fa-envelope"></i> Enviar e-mail
-      </a>
+    <h2 class="reveal d1">Seu salão merece uma assistente que nunca descansa.</h2>
+    <p class="reveal d2">Entre em contato agora. A Bella pode estar ativa no seu WhatsApp ainda esta semana.<br>Respondemos em menos de 4 horas em dias úteis.</p>
+    <div class="cta-actions reveal d3">
+      <a href="https://wa.me/5533991090996?text=Oi!+Quero+ativar+a+Bella+IA+no+meu+sal%C3%A3o+ou+cl%C3%ADnica" class="btn btn-green" target="_blank" style="font-size:1rem;padding:1rem 2rem"><i class="fa-brands fa-whatsapp"></i> Falar com consultor no WhatsApp</a>
+      <a href="mailto:nextaflow.ia@gmail.com" class="btn btn-outline" style="font-size:1rem;padding:1rem 2rem"><i class="fa-solid fa-envelope"></i> Enviar e-mail</a>
     </div>
-    <div class="cta-note reveal reveal-delay-4">
-      <i class="fa-solid fa-shield-halved"></i>
-      Garantia de 30 dias · Sem fidelidade · Sem burocracia
-    </div>
+    <div class="cta-note reveal d4"><i class="fa-solid fa-shield-halved"></i> Garantia de 30 dias · Sem fidelidade · Sem burocracia</div>
   </div>
 </section>
 
-<!-- ============================================================
-     FOOTER
-     ============================================================ -->
+<!-- FOOTER -->
 <footer>
-  <div class="footer-logo">Bella<span>.IA</span></div>
+  <div class="flogo">Bella<span>.IA</span></div>
   <p>
-    Um produto <a href="https://www.nextaflow.com.br" target="_blank">NextaFlow</a> —
-    Tecnologia & IA para PMEs<br>
-    (33) 99109-0996 · nextaflow.ia@gmail.com · Teófilo Otoni, MG<br>
-    <br>
+    Um produto <a href="https://www.nextaflow.com.br" target="_blank">NextaFlow</a> — Tecnologia & IA para PMEs<br>
+    (33) 99109-0996 · nextaflow.ia@gmail.com · Teófilo Otoni, MG<br><br>
     Bella IA é um serviço de automação independente integrado via API à plataforma Trinks.<br>
-    A Trinks é marca registrada de seus respectivos proprietários. Bella IA não possui afiliação com a Trinks.<br>
-    <br>
-    <a href="#">Termos de Uso</a> ·
-    <a href="#">Política de Privacidade</a> ·
-    LGPD Compliance ·
-    NextaFlow © 2025
+    A Trinks é marca registrada de seus respectivos proprietários. Bella IA não possui afiliação com a Trinks.<br><br>
+    <a href="#">Termos de Uso</a> · <a href="#">Política de Privacidade</a> · LGPD Compliance · NextaFlow © 2025
   </p>
 </footer>
 
-<!-- ============================================================
-     JAVASCRIPT
-     ============================================================ -->
 <script>
-/* --- NAV scroll --- */
-const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
-  navbar.classList.toggle('scrolled', window.scrollY > 50);
-});
+/* NAV */
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>50));
 
-/* --- Reveal on scroll --- */
-const revealEls = document.querySelectorAll('.reveal');
-const revealObs = new IntersectionObserver((entries) => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      revealObs.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.12 });
-revealEls.forEach(el => revealObs.observe(el));
+/* REVEAL */
+const revEls=document.querySelectorAll('.reveal');
+const ro=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');ro.unobserve(e.target)}})
+},{threshold:0.1});
+revEls.forEach(el=>ro.observe(el));
 
-/* --- Hero chat animation --- */
-const heroMsgs = [
-  { type: 'r', text: 'Oi! Tem horário pra corte sábado?', time: '22:47' },
-  { type: 's', text: 'Oi! 😊 Deixa eu verificar a agenda...', time: '22:47' },
-  { type: 's', text: 'Temos <strong>10h</strong>, <strong>14h</strong> e <strong>16h30</strong>. Qual prefere?', time: '22:47' },
-  { type: 'r', text: '14h perfeito!', time: '22:48' },
-  { type: 's', text: '✅ Agendado! Sábado às 14h. Até lá! 💛', time: '22:48' },
+/* HERO CHAT ANIMATION */
+const msgs=[
+  {t:'r',m:'Oi! Tem horário pra sábado às 15h?',h:'22:51'},
+  {t:'s',m:'Oi! 😊 Verificando a agenda...',h:'22:51'},
+  {t:'s',m:'Temos <strong>15h</strong> e <strong>16h30</strong> disponíveis. Qual prefere?',h:'22:51'},
+  {t:'r',m:'15h perfeito!',h:'22:52'},
+  {t:'s',m:'✅ Agendado! Sábado às 15h. Você recebe um lembrete na véspera. Até lá! 💛',h:'22:52'},
 ];
-
-const heroChat = document.getElementById('heroChat');
-let msgIdx = 0;
-
-function showNextMsg() {
-  if (msgIdx >= heroMsgs.length) {
-    // restart after pause
-    setTimeout(() => {
-      heroChat.innerHTML = '';
-      msgIdx = 0;
-      setTimeout(showNextMsg, 800);
-    }, 4000);
-    return;
-  }
-  const m = heroMsgs[msgIdx];
-  if (m.type === 's') {
-    // show typing first
-    const typing = document.createElement('div');
-    typing.className = 'typing-indicator';
-    typing.innerHTML = '<span></span><span></span><span></span>';
-    heroChat.appendChild(typing);
-    heroChat.scrollTop = heroChat.scrollHeight;
-    setTimeout(() => { typing.classList.add('show'); }, 50);
-    setTimeout(() => {
-      typing.remove();
-      addMsg(m);
-    }, 1200);
-  } else {
-    addMsg(m);
-  }
+const hc=document.getElementById('heroChat');
+let mi=0;
+function nextMsg(){
+  if(mi>=msgs.length){setTimeout(()=>{hc.innerHTML='';mi=0;setTimeout(nextMsg,800)},4200);return}
+  const m=msgs[mi];
+  if(m.t==='s'){
+    const ty=document.createElement('div');ty.className='typing';
+    ty.innerHTML='<span></span><span></span><span></span>';
+    hc.appendChild(ty);hc.scrollTop=9999;
+    setTimeout(()=>ty.classList.add('show'),40);
+    setTimeout(()=>{ty.remove();addM(m)},1300);
+  }else{addM(m)}
 }
-
-function addMsg(m) {
-  const el = document.createElement('div');
-  el.className = `chat-msg ${m.type === 'r' ? 'received' : 'sent'}`;
-  el.innerHTML = `${m.text}<span class="time">${m.time}</span>`;
-  heroChat.appendChild(el);
-  heroChat.scrollTop = heroChat.scrollHeight;
-  setTimeout(() => { el.classList.add('show'); }, 30);
-  msgIdx++;
-  const delay = m.type === 'r' ? 900 : 600;
-  setTimeout(showNextMsg, delay);
+function addM(m){
+  const el=document.createElement('div');
+  el.className=`cm ${m.t}`;
+  el.innerHTML=`${m.m}<span class="t">${m.h}</span>`;
+  hc.appendChild(el);hc.scrollTop=9999;
+  setTimeout(()=>el.classList.add('show'),30);
+  mi++;
+  setTimeout(nextMsg,m.t==='r'?950:650);
 }
+setTimeout(nextMsg,1200);
 
-setTimeout(showNextMsg, 1500);
-
-/* --- Cases de uso tabs --- */
-document.querySelectorAll('.case-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    const c = tab.dataset.case;
-    document.querySelectorAll('.case-tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.case-info').forEach(i => i.classList.remove('active'));
-    document.querySelectorAll('.case-chat').forEach(i => i.classList.remove('active'));
+/* CASES TABS */
+document.querySelectorAll('.ctab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    const c=tab.dataset.case;
+    document.querySelectorAll('.ctab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.cinfo').forEach(i=>i.classList.remove('active'));
+    document.querySelectorAll('.cchat').forEach(i=>i.classList.remove('active'));
     tab.classList.add('active');
-    document.querySelector(`.case-info[data-case="${c}"]`).classList.add('active');
-    document.querySelector(`.case-chat[data-case="${c}"]`).classList.add('active');
+    document.querySelector(`.cinfo[data-case="${c}"]`).classList.add('active');
+    document.querySelector(`.cchat[data-case="${c}"]`).classList.add('active');
   });
 });
 
-/* --- ROI Calculator --- */
-function fmt(n) { return new Intl.NumberFormat('pt-BR', {style:'currency', currency:'BRL', maximumFractionDigits:0}).format(n); }
-
-function calcROI() {
-  const clientes = parseInt(document.getElementById('rClientes').value);
-  const ticket   = parseInt(document.getElementById('rTicket').value);
-  const pFora    = parseInt(document.getElementById('rFora').value) / 100;
-  const pConv    = parseInt(document.getElementById('rConv').value) / 100;
-
-  const msgsPorMes     = clientes * 4; // ~4 semanas
-  const msgsFora       = Math.round(msgsPorMes * pFora);
-  const convertidosAtual = Math.round(msgsFora * pConv);
-  const perdidos       = msgsFora - convertidosAtual;
-  const faturamentoPerdido = perdidos * ticket;
-
-  const convBella      = 0.65; // taxa de conversão estimada da Bella
-  const recuperados    = Math.round(perdidos * convBella);
-  const faturamentoRecuperado = recuperados * ticket;
-
-  const custoPlano     = 347; // plano profissional
-  const paybackDias    = faturamentoPerdido > 0 ? Math.round(custoPlano / (faturamentoPerdido / 30)) : 0;
-
-  document.getElementById('rPerdidos').textContent    = perdidos + ' agend./mês';
-  document.getElementById('rFaturamento').textContent = fmt(faturamentoPerdido);
-  document.getElementById('rRecuperados').textContent = recuperados + ' agend./mês';
-
-  if (paybackDias <= 1) {
-    document.getElementById('rPayback').textContent = 'menos de 1 dia';
-  } else if (paybackDias <= 30) {
-    document.getElementById('rPayback').textContent = paybackDias + ' dias de uso';
-  } else {
-    document.getElementById('rPayback').textContent = 'no 1º mês';
-  }
-
-  // Update displays
-  document.getElementById('vClientes').textContent = clientes + ' clientes/sem.';
-  document.getElementById('vTicket').textContent   = fmt(ticket);
-  document.getElementById('vFora').textContent     = parseInt(document.getElementById('rFora').value) + '%';
-  document.getElementById('vConv').textContent     = parseInt(document.getElementById('rConv').value) + '%';
+/* ROI CALCULATOR */
+const fmt=n=>new Intl.NumberFormat('pt-BR',{style:'currency',currency:'BRL',maximumFractionDigits:0}).format(n);
+function roi(){
+  const cl=+document.getElementById('rC').value;
+  const tk=+document.getElementById('rT').value;
+  const pf=+document.getElementById('rF').value/100;
+  const pv=+document.getElementById('rV').value/100;
+  const msgs4w=cl*4;
+  const fora=Math.round(msgs4w*pf);
+  const convAtual=Math.round(fora*pv);
+  const perd=fora-convAtual;
+  const fatPerd=perd*tk;
+  const recup=Math.round(perd*0.65);
+  const plano=447;
+  const pbDias=fatPerd>0?Math.round(plano/(fatPerd/30)):0;
+  document.getElementById('rP').textContent=perd+' agend./mês';
+  document.getElementById('rFat').textContent=fmt(fatPerd);
+  document.getElementById('rRec').textContent=recup+' agend./mês';
+  document.getElementById('rPB').textContent=pbDias<=1?'menos de 1 dia':pbDias<=30?pbDias+' dias de uso':'no 1º mês';
+  document.getElementById('vC').textContent=cl+' clientes/sem.';
+  document.getElementById('vT').textContent=fmt(tk);
+  document.getElementById('vF').textContent=+document.getElementById('rF').value+'%';
+  document.getElementById('vV').textContent=+document.getElementById('rV').value+'%';
 }
+['rC','rT','rF','rV'].forEach(id=>document.getElementById(id).addEventListener('input',roi));
+roi();
 
-['rClientes','rTicket','rFora','rConv'].forEach(id => {
-  document.getElementById(id).addEventListener('input', calcROI);
-});
-calcROI();
-
-/* --- FAQ accordion --- */
-document.querySelectorAll('.faq-q').forEach(q => {
-  q.addEventListener('click', () => {
-    const item = q.parentElement;
-    const isOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
-    if (!isOpen) item.classList.add('open');
+/* FAQ */
+document.querySelectorAll('.faq-q').forEach(q=>{
+  q.addEventListener('click',()=>{
+    const item=q.parentElement;
+    const wasOpen=item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+    if(!wasOpen)item.classList.add('open');
   });
 });
 </script>
