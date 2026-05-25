@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Compromisso LGPD — Bella IA | NextaFlow</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--navy:#1B2A4A;--navy-md:#243459;--green:#4CAF78;--green-lt:#6FD49A;--muted:#8A9BBE;--white:#fff;--fd:'Sora',sans-serif;--fb:'DM Sans',sans-serif}
+body{font-family:var(--fb);background:var(--navy);color:var(--white);line-height:1.75;font-size:1rem}
+a{color:var(--green);text-decoration:none}
+a:hover{text-decoration:underline}
+nav{background:rgba(27,42,74,0.97);border-bottom:1px solid rgba(255,255,255,0.07);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.logo{font-family:var(--fd);font-size:1.1rem;font-weight:700;color:var(--white)}
+.logo span{color:var(--green)}
+.back{font-size:0.84rem;color:var(--muted)}
+.back:hover{color:var(--white)}
+.wrap{max-width:760px;margin:0 auto;padding:4rem 2rem 6rem}
+.doc-header{margin-bottom:3rem;padding-bottom:2rem;border-bottom:1px solid rgba(255,255,255,0.08)}
+.doc-badge{display:inline-block;background:rgba(76,175,120,0.12);border:1px solid rgba(76,175,120,0.25);color:var(--green);font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.3rem 0.8rem;border-radius:100px;margin-bottom:1rem}
+h1{font-family:var(--fd);font-size:2rem;font-weight:700;line-height:1.2;margin-bottom:0.75rem}
+.doc-meta{font-size:0.83rem;color:var(--muted)}
+h2{font-family:var(--fd);font-size:1.15rem;font-weight:700;color:var(--white);margin:2.5rem 0 0.85rem;padding-top:2.5rem;border-top:1px solid rgba(255,255,255,0.06)}
+h2:first-of-type{border-top:none;padding-top:0}
+p{color:#A8B8D0;margin-bottom:0.85rem}
+ul{color:#A8B8D0;padding-left:1.5rem;margin-bottom:0.85rem}
+li{margin-bottom:0.4rem}
+.princip-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0}
+.princip{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:1.25rem}
+.princip-icon{font-size:1.4rem;margin-bottom:0.5rem}
+.princip h3{font-family:var(--fd);font-size:0.88rem;font-weight:700;color:var(--green);margin-bottom:0.35rem}
+.princip p{font-size:0.82rem;color:var(--muted);margin-bottom:0;line-height:1.55}
+.bases-list{display:flex;flex-direction:column;gap:0.75rem;margin:1rem 0 1.5rem}
+.base-item{display:flex;gap:1rem;align-items:flex-start;background:rgba(255,255,255,0.025);border-radius:10px;padding:1rem 1.1rem}
+.base-tag{background:rgba(76,175,120,0.15);border:1px solid rgba(76,175,120,0.25);color:var(--green-lt);font-size:0.7rem;font-weight:700;padding:0.2rem 0.6rem;border-radius:100px;white-space:nowrap;margin-top:2px;flex-shrink:0}
+.base-item p{margin-bottom:0;font-size:0.86rem;color:#A8B8D0}
+.direitos-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;margin:1rem 0 1.5rem}
+.dir{background:rgba(76,175,120,0.05);border:1px solid rgba(76,175,120,0.13);border-radius:10px;padding:1rem 1.1rem}
+.dir h4{font-family:var(--fd);font-size:0.85rem;font-weight:700;color:var(--white);margin-bottom:0.25rem}
+.dir p{font-size:0.8rem;color:var(--muted);margin-bottom:0;line-height:1.5}
+.cta-box{background:rgba(76,175,120,0.07);border:1px solid rgba(76,175,120,0.2);border-radius:12px;padding:1.75rem;margin:2rem 0;text-align:center}
+.cta-box h3{font-family:var(--fd);font-size:1.05rem;font-weight:700;margin-bottom:0.5rem}
+.cta-box p{font-size:0.88rem;color:var(--muted);margin-bottom:1.25rem}
+.cta-box a{display:inline-flex;align-items:center;gap:0.4rem;background:var(--green);color:var(--navy);font-weight:700;font-size:0.9rem;padding:0.7rem 1.5rem;border-radius:100px;transition:all 0.2s}
+.cta-box a:hover{background:var(--green-lt);text-decoration:none;transform:translateY(-1px)}
+footer{background:var(--navy-md);border-top:1px solid rgba(255,255,255,0.06);padding:2rem;text-align:center;font-size:0.78rem;color:var(--muted)}
+footer a{color:var(--muted)}
+footer a:hover{color:var(--white)}
+@media(max-width:600px){
+  .wrap{padding:2.5rem 1.25rem 4rem}
+  h1{font-size:1.6rem}
+  .princip-grid{grid-template-columns:1fr}
+  .direitos-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo">Bella<span>.IA</span></div>
+  <a href="https://bella.nextaflow.com.br" class="back">&#8592; Voltar ao site</a>
+</nav>
+
+<div class="wrap">
+  <div class="doc-header">
+    <div class="doc-badge">Proteção de Dados</div>
+    <h1>Compromisso LGPD</h1>
+    <p class="doc-meta">Última atualização: junho de 2025 &nbsp;|&nbsp; Versão 1.0 &nbsp;|&nbsp; NextaFlow &mdash; Bella IA</p>
+  </div>
+
+  <p>A NextaFlow desenvolveu o serviço Bella IA com a proteção de dados como princípio — não como obrigação de última hora. Este documento explica, de forma clara e acessível, como aplicamos a <strong>Lei Geral de Proteção de Dados Pessoais (LGPD — Lei nº 13.709/2018)</strong> na operação do nosso serviço.</p>
+
+  <h2>Os 10 princípios que guiam nossa operação</h2>
+  <div class="princip-grid">
+    <div class="princip">
+      <div class="princip-icon">&#127919;</div>
+      <h3>Finalidade</h3>
+      <p>Coletamos dados apenas para fins específicos, explícitos e legítimos. Nunca para usos secundários não informados.</p>
+    </div>
+    <div class="princip">
+      <div class="princip-icon">&#9878;&#65039;</div>
+      <h3>Adequação</h3>
+      <p>O tratamento é compatível com as finalidades informadas. Não há desvio de propósito.</p>
+    </div>
+    <div class="princip">
+      <div class="princip-icon">&#128172;</div>
+      <h3>Necessidade</h3>
+      <p>Coletamos o mínimo necessário. Se um dado não é indispensável para o serviço, não o coletamos.</p>
+    </div>
+    <div class="princip">
+      <div class="princip-icon">&#128065;&#65039;</div>
+      <h3>Livre acesso</h3>
+      <p>Titulares podem consultar, corrigir ou solicitar exclusão dos seus dados a qualquer momento.</p>
+    </div>
+    <div class="princip">
+      <div class="princip-icon">&#9989;</div>
+      <h3>Qualidade</h3>
+      <p>Mantemos os dados exatos, claros e atualizados conforme necessário para o serviço.</p>
+    </div>
+    <div class="princip">
+      <div class="princip-icon">&#128220;</div>
+      <h3>Transparência</h3>
+      <p>Informamos claramente quem somos, o que coletamos, por quê e com quem compartilhamos.</p>
+    </div>
+    <div class="princip">
+      <div class="princip-icon">&#128274;</div>
+      <h3>Segurança</h3>
+      <p>Medidas técnicas e organizacionais protegem os dados contra acesso não autorizado e incidentes.</p>
+    </div>
+    <div class="princip">
+      <div class="princip-icon">&#128737;&#65039;</div>
+      <h3>Prevenção</h3>
+      <p>Adotamos postura proativa para evitar danos antes que ocorram, não apenas reativamente.</p>
+    </div>
+    <div class="princip">
+      <div class="princip-icon">&#9878;&#65039;</div>
+      <h3>Não discriminação</h3>
+      <p>Os dados nunca são usados para fins discriminatórios, ilícitos ou abusivos.</p>
+    </div>
+    <div class="princip">
+      <div class="princip-icon">&#128203;</div>
+      <h3>Responsabilização</h3>
+      <p>Demonstramos o cumprimento das normas por meio de documentação, processos e registros auditáveis.</p>
+    </div>
+  </div>
+
+  <h2>Bases legais que utilizamos</h2>
+  <p>Todo tratamento de dados realizado pela NextaFlow está fundamentado em pelo menos uma das seguintes bases legais previstas no Art. 7º da LGPD:</p>
+  <div class="bases-list">
+    <div class="base-item">
+      <span class="base-tag">Art. 7º, V</span>
+      <p><strong>Execução de contrato:</strong> o tratamento de dados dos contratantes e de seus clientes é necessário para a execução do serviço Bella IA contratado. Esta é a base principal.</p>
+    </div>
+    <div class="base-item">
+      <span class="base-tag">Art. 7º, II</span>
+      <p><strong>Cumprimento de obrigação legal:</strong> tratamento de dados de faturamento e registros fiscais exigidos pela legislação brasileira.</p>
+    </div>
+    <div class="base-item">
+      <span class="base-tag">Art. 7º, IX</span>
+      <p><strong>Legítimo interesse:</strong> para melhorias do serviço com dados anonimizados e agregados, sem identificação individual dos titulares.</p>
+    </div>
+  </div>
+
+  <h2>Seus direitos como titular de dados</h2>
+  <p>Garantimos o exercício de todos os direitos previstos no Art. 18 da LGPD:</p>
+  <div class="direitos-grid">
+    <div class="dir">
+      <h4>&#128269; Confirmação e acesso</h4>
+      <p>Confirmar se tratamos seus dados e acessar uma cópia completa.</p>
+    </div>
+    <div class="dir">
+      <h4>&#9999;&#65039; Correção</h4>
+      <p>Corrigir dados incompletos, inexatos ou desatualizados.</p>
+    </div>
+    <div class="dir">
+      <h4>&#128683; Anonimização ou exclusão</h4>
+      <p>Solicitar anonimização, bloqueio ou eliminação de dados desnecessários.</p>
+    </div>
+    <div class="dir">
+      <h4>&#128228; Portabilidade</h4>
+      <p>Receber seus dados em formato estruturado para uso em outro serviço.</p>
+    </div>
+    <div class="dir">
+      <h4>&#128221; Informação</h4>
+      <p>Saber com quais entidades compartilhamos seus dados.</p>
+    </div>
+    <div class="dir">
+      <h4>&#10060; Revogação</h4>
+      <p>Revogar o consentimento quando o tratamento se basear nessa hipótese.</p>
+    </div>
+    <div class="dir">
+      <h4>&#9878;&#65039; Oposição</h4>
+      <p>Opor-se a tratamento realizado com base em legítimo interesse.</p>
+    </div>
+    <div class="dir">
+      <h4>&#128203; Revisão automatizada</h4>
+      <p>Solicitar revisão humana de decisões tomadas exclusivamente por algoritmos.</p>
+    </div>
+  </div>
+  <p>Para exercer qualquer direito, entre em contato por <a href="mailto:nextaflow.ia@gmail.com">nextaflow.ia@gmail.com</a>. Respondemos em até <strong>15 dias úteis</strong>.</p>
+
+  <h2>Como protegemos os dados na prática</h2>
+  <ul>
+    <li><strong>Criptografia em trânsito:</strong> todas as comunicações entre sistemas utilizam TLS 1.2 ou superior</li>
+    <li><strong>Segredos protegidos:</strong> chaves de API, tokens e credenciais são armazenados como variáveis de ambiente seguras, nunca expostos em código ou logs</li>
+    <li><strong>Acesso por necessidade:</strong> apenas as pessoas com necessidade operacional têm acesso aos dados</li>
+    <li><strong>Subprocessadores auditados:</strong> utilizamos apenas fornecedores que possuem políticas de privacidade e segurança compatíveis com a LGPD</li>
+    <li><strong>Retenção limitada:</strong> dados são excluídos automaticamente após o período necessário</li>
+    <li><strong>Sem treino de IA com dados de clientes:</strong> os dados processados pela OpenAI via API não são usados para treinamento de modelos, conforme os termos do fornecedor</li>
+  </ul>
+
+  <h2>Transferência internacional de dados</h2>
+  <p>Alguns dos nossos subprocessadores (OpenAI, Supabase, Digital Ocean, Railway) estão localizados nos Estados Unidos. Essas transferências são realizadas com base no Art. 33 da LGPD, considerando que esses países e organizações proporcionam grau de proteção de dados pessoais adequado ou equivalente ao previsto na legislação brasileira, e são reguladas por contratos de processamento de dados compatíveis com a LGPD.</p>
+
+  <h2>Papel da NextaFlow no ecossistema de dados</h2>
+  <p>A NextaFlow atua em dois papéis distintos:</p>
+  <ul>
+    <li><strong>Controladora:</strong> em relação aos dados dos estabelecimentos contratantes (salões, clínicas) — decide como e por quê esses dados são tratados</li>
+    <li><strong>Operadora:</strong> em relação aos dados dos clientes finais dos estabelecimentos — processa esses dados apenas conforme as instruções do controlador (o estabelecimento contratante)</li>
+  </ul>
+  <p>Os estabelecimentos contratantes são os controladores dos dados de seus clientes finais e têm a responsabilidade primária de obter as autorizações necessárias para o contato via WhatsApp.</p>
+
+  <h2>Notificação de incidentes</h2>
+  <p>Em caso de incidente de segurança que possa causar risco ou dano relevante aos titulares, a NextaFlow se compromete a:</p>
+  <ul>
+    <li>Notificar a ANPD em prazo razoável, conforme regulamentação vigente</li>
+    <li>Comunicar os titulares afetados com informações claras sobre o que ocorreu, quais dados foram afetados e as medidas tomadas</li>
+    <li>Documentar o incidente e as ações de resposta</li>
+  </ul>
+
+  <div class="cta-box">
+    <h3>Dúvidas sobre privacidade?</h3>
+    <p>Nossa equipe responde questões sobre dados pessoais e LGPD em até 15 dias úteis.</p>
+    <a href="mailto:nextaflow.ia@gmail.com">&#9993;&#65039; nextaflow.ia@gmail.com</a>
+  </div>
+
+  <p style="font-size:0.83rem;color:var(--muted);margin-top:2rem">Você também tem o direito de registrar reclamação junto à <strong style="color:var(--white)">Autoridade Nacional de Proteção de Dados (ANPD)</strong>: <a href="https://www.gov.br/anpd" target="_blank">www.gov.br/anpd</a></p>
+</div>
+
+<footer>
+  <p>
+    <a href="https://bella.nextaflow.com.br">Bella IA</a> &middot;
+    <a href="https://bella.nextaflow.com.br/privacidade">Política de Privacidade</a> &middot;
+    <a href="https://bella.nextaflow.com.br/termos">Termos de Uso</a> &middot;
+    NextaFlow &mdash; Teófilo Otoni, MG
+  </p>
+</footer>
+</body>
+</html>
